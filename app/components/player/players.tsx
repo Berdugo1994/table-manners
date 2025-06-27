@@ -6,8 +6,9 @@ import PlusButton from "./plusButton/plusButton";
 
 export default function Players() {
   const [focusedPlayerId, setFocusedPlayerId] = useState<number | null>(null);
-  const { addPlayer, getPlayersAmount, getPlayersIds, nextPlayerId } =
+  const { addPlayer, getPlayersAmount, getPlayersIds, nextPlayerId, players } =
     usePlayerStore();
+  console.log(players);
   const playersAmount = getPlayersAmount();
 
   const getPlusButtonLocation = () => {

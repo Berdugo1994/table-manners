@@ -30,6 +30,36 @@ interface PlayerStore {
 
 export const usePlayerStore = create<PlayerStore>((set, get) => ({
   players: [],
+  // players: [
+  //   {
+  //     name: "Name0",
+  //     buyIns: 0,
+  //     id: 0,
+  //     rowIndex: 1,
+  //     columnIndex: 3,
+  //   },
+  //   {
+  //     name: "Name1",
+  //     buyIns: 0,
+  //     id: 1,
+  //     rowIndex: 6,
+  //     columnIndex: 5,
+  //   },
+  //   {
+  //     name: "Name2",
+  //     buyIns: 0,
+  //     id: 2,
+  //     rowIndex: 11,
+  //     columnIndex: 3,
+  //   },
+  //   {
+  //     name: "Name3",
+  //     buyIns: 0,
+  //     id: 3,
+  //     rowIndex: 6,
+  //     columnIndex: 1,
+  //   },
+  // ],
 
   addPlayer: (player) => {
     const playersAmount = get().getPlayersAmount();
@@ -43,8 +73,8 @@ export const usePlayerStore = create<PlayerStore>((set, get) => ({
       columnIndex: newPlayerLocation.column,
     };
     let newPlayers = [...get().players, newPlayer];
-    if (newPlayerId === 4) {
-      newPlayers = reOrderPlayers(newPlayers);
+    if (newPlayerId >= 4) {
+      newPlayers = reOrderPlayers(newPlayers, newPlayerId - 4, newPlayerId);
     }
 
     set(() => ({

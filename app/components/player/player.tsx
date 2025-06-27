@@ -1,9 +1,10 @@
 import classNames from "classnames";
 import styles from "./player.module.css";
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { usePlayerStore, type Player } from "../../store/playerStore";
-import { Input } from "@heroui/react";
 import AdditionalPlayerLayout from "./additional/additionalPlayerLayout";
+import { NameEditor } from "./additional/nameEditor";
+import { BoardSize } from "@/app/consts/size";
 
 interface PlayerProps {
   playerId: number;
@@ -25,8 +26,11 @@ export default function Player(props: PlayerProps) {
   const [actionState, setActionState] =
     useState<ActionState>(defaultActionState);
   const { playerId, isFocused, toggleFocus } = props;
-  const { getPlayer, updatePlayerName } = usePlayerStore();
-  const nameInputRef = useRef<HTMLInputElement>(null);
+  const { getPlayer } = usePlayerStore();
+
+  const updateSingleState = (state: Partial<ActionState>) => {
+    setActionState((prev) => ({ ...prev, ...state }));
+  };
 
   const player = getPlayer(playerId);
   if (!player) {
@@ -35,49 +39,44 @@ export default function Player(props: PlayerProps) {
   const { rowIndex, columnIndex } = player;
 
   useEffect(() => {
+    console.log("isFocused", isFocused);
+    console.log("actionState", actionState);
+    if (isFocused && !actionState.name) {
+      updateSingleState({ menu: true });
+    }
     if (!isFocused) {
-      setActionState({ menu: false, name: false });
+      updateSingleState({ menu: false, name: false });
     }
   }, [isFocused]);
 
-  useEffect(() => {
-    // focus on name input when name action is active
-    if (actionState.name && nameInputRef.current) {
-      nameInputRef.current.focus();
+  const getAdditionalContent = () => {
+    if (actionState.name) {
+      return <NameEditor toggleFocus={toggleFocus} player={player} />;
     }
-  }, [actionState.name]);
+    if (actionState.menu) {
+      console.log("menu");
+      return <div>Menu</div>;
+    }
 
-  const renderNameEditor = () => {
-    const onSave = () => {
-      updatePlayerName(playerId, nameInputRef.current?.value);
-      toggleFocus();
+    return null;
+  };
+
+  const getPlayerCellStyle = (playerColumn: number, playerRow: number) => {
+    console.log("playerColumn", playerColumn);
+    console.log("playerRow", playerRow);
+    const start =
+      playerColumn -
+      (playerColumn === 1
+        ? 0
+        : playerColumn === 21
+        ? BoardSize.PLAYER_CELL_WIDTH - 1
+        : 1);
+    const end = start + BoardSize.PLAYER_CELL_WIDTH;
+    return {
+      gridColumnStart: start,
+      gridColumnEnd: end,
+      gridRowStart: playerRow,
     };
-    return (
-      <div className={styles.playerNameInputContainer}>
-        <Input
-          classNames={{
-            input: "w-[50px]",
-          }}
-          ref={nameInputRef}
-          placeholder={player?.name ?? "Name" + playerId}
-          type="text"
-          size="sm"
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              onSave();
-            }
-          }}
-        />
-        <div className={classNames(styles.saveButton, "text-success")}>
-          <i
-            className="pi pi-check "
-            onClick={() => {
-              onSave();
-            }}
-          />
-        </div>
-      </div>
-    );
   };
 
   return (
@@ -85,10 +84,7 @@ export default function Player(props: PlayerProps) {
       className={classNames(styles.playerContainer, {
         [styles.focused]: isFocused,
       })}
-      style={{
-        gridColumnStart: player.columnIndex,
-        gridRowStart: player.rowIndex,
-      }}
+      style={getPlayerCellStyle(columnIndex, rowIndex)}
     >
       <div
         className={classNames(styles.playerName)}
@@ -99,7 +95,7 @@ export default function Player(props: PlayerProps) {
         {player?.name || "Name" + playerId}
       </div>
       <AdditionalPlayerLayout rowIndex={rowIndex} columnIndex={columnIndex}>
-        {actionState.name && renderNameEditor()}
+        {getAdditionalContent()}
       </AdditionalPlayerLayout>
     </div>
   );

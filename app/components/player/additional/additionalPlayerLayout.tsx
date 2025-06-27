@@ -61,7 +61,7 @@ export default function AdditionalPlayerLayout({
   ): "top" | "bottom" | "left" | "right" => {
     if (row === 1) return "bottom"; // Player 0 (top)
     if (row === 5) return "top"; // Player 2 (bottom)
-    if (column === 5) return "left"; // Player 1 (right)
+    if (column === 21) return "left"; // Player 1 (right)
     if (column === 1) return "right"; // Player 3 (left)
 
     return "bottom";
