@@ -7,16 +7,15 @@ export interface Player {
   rowIndex: number;
   columnIndex: number;
   name?: string;
-  buyIns: number;
+  credits: number;
 }
 
 interface PlayerStore {
   players: Player[];
-  addPlayer: (player: Omit<Player, "id" | "rowIndex" | "columnIndex">) => void;
+  addPlayer: () => void;
   updatePlayer: (id: number, updates: Partial<Player>) => void;
   removePlayer: (id: number) => void;
-  addBuyIn: (id: number, amount: number) => void;
-  removeBuyIn: (id: number, amount: number) => void;
+  updateCredits: (id: number, amount: number) => void;
   getPlayer: (id: number) => Player | undefined;
   getPlayersIds: () => number[];
   getPlayersAmount: () => number;
@@ -61,16 +60,17 @@ export const usePlayerStore = create<PlayerStore>((set, get) => ({
   //   },
   // ],
 
-  addPlayer: (player) => {
+  addPlayer: () => {
     const playersAmount = get().getPlayersAmount();
     const newPlayerId = get().nextPlayerId();
     const newPlayerLocation = getPlayerLocation(newPlayerId, playersAmount + 1);
 
     const newPlayer: Player = {
-      ...player,
       id: newPlayerId,
       rowIndex: newPlayerLocation.row,
       columnIndex: newPlayerLocation.column,
+      credits: 0,
+      name: undefined,
     };
     let newPlayers = [...get().players, newPlayer];
     if (newPlayerId >= 4) {
@@ -96,22 +96,10 @@ export const usePlayerStore = create<PlayerStore>((set, get) => ({
     }));
   },
 
-  addBuyIn: (id, amount) => {
+  updateCredits: (id, amount) => {
     set((state) => ({
       players: state.players.map((player) =>
-        player.id === id
-          ? { ...player, buyIns: player.buyIns + amount }
-          : player
-      ),
-    }));
-  },
-
-  removeBuyIn: (id, amount) => {
-    set((state) => ({
-      players: state.players.map((player) =>
-        player.id === id
-          ? { ...player, buyIns: Math.max(0, player.buyIns - amount) }
-          : player
+        player.id === id ? { ...player, credits: amount } : player
       ),
     }));
   },

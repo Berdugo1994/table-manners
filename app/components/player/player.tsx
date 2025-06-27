@@ -5,6 +5,10 @@ import { usePlayerStore, type Player } from "../../store/playerStore";
 import AdditionalPlayerLayout from "./additional/additionalPlayerLayout";
 import { NameEditor } from "./additional/nameEditor";
 import { BoardSize } from "@/app/consts/size";
+import { Menu } from "./additional/menu";
+import { Rebuy } from "./additional/rebuy";
+import { ActionState } from "./additional/types";
+import { PlayerCard } from "./playerCard";
 
 interface PlayerProps {
   playerId: number;
@@ -12,14 +16,10 @@ interface PlayerProps {
   toggleFocus: () => void;
 }
 
-type ActionState = {
-  menu: boolean;
-  name: boolean;
-};
-
 const defaultActionState: ActionState = {
   menu: false,
   name: true,
+  rebuy: false,
 };
 
 export default function Player(props: PlayerProps) {
@@ -28,7 +28,7 @@ export default function Player(props: PlayerProps) {
   const { playerId, isFocused, toggleFocus } = props;
   const { getPlayer } = usePlayerStore();
 
-  const updateSingleState = (state: Partial<ActionState>) => {
+  const updatePartlyState = (state: Partial<ActionState>) => {
     setActionState((prev) => ({ ...prev, ...state }));
   };
 
@@ -39,13 +39,11 @@ export default function Player(props: PlayerProps) {
   const { rowIndex, columnIndex } = player;
 
   useEffect(() => {
-    console.log("isFocused", isFocused);
-    console.log("actionState", actionState);
     if (isFocused && !actionState.name) {
-      updateSingleState({ menu: true });
+      updatePartlyState({ menu: true });
     }
     if (!isFocused) {
-      updateSingleState({ menu: false, name: false });
+      updatePartlyState({ menu: false, name: false, rebuy: false });
     }
   }, [isFocused]);
 
@@ -54,16 +52,22 @@ export default function Player(props: PlayerProps) {
       return <NameEditor toggleFocus={toggleFocus} player={player} />;
     }
     if (actionState.menu) {
-      console.log("menu");
-      return <div>Menu</div>;
+      return (
+        <Menu
+          toggleFocus={toggleFocus}
+          player={player}
+          updatePartlyState={updatePartlyState}
+        />
+      );
+    }
+    if (actionState.rebuy) {
+      return <Rebuy player={player} toggleFocus={toggleFocus} />;
     }
 
     return null;
   };
 
   const getPlayerCellStyle = (playerColumn: number, playerRow: number) => {
-    console.log("playerColumn", playerColumn);
-    console.log("playerRow", playerRow);
     const start =
       playerColumn -
       (playerColumn === 1
@@ -86,14 +90,11 @@ export default function Player(props: PlayerProps) {
       })}
       style={getPlayerCellStyle(columnIndex, rowIndex)}
     >
-      <div
-        className={classNames(styles.playerName)}
-        onClick={() => {
-          toggleFocus();
-        }}
-      >
-        {player?.name || "Name" + playerId}
-      </div>
+      <PlayerCard
+        toggleFocus={toggleFocus}
+        player={player}
+        isFocused={isFocused}
+      />
       <AdditionalPlayerLayout rowIndex={rowIndex} columnIndex={columnIndex}>
         {getAdditionalContent()}
       </AdditionalPlayerLayout>

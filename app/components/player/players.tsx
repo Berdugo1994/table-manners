@@ -44,10 +44,7 @@ export default function Players() {
         row={location.row}
         column={location.column}
         addPlayer={() => {
-          addPlayer({
-            name: undefined,
-            buyIns: 0,
-          });
+          addPlayer();
           setFocusedPlayerId(createdPlayerId);
         }}
       />

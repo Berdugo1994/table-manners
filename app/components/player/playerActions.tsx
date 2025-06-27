@@ -6,7 +6,7 @@ interface PlayerActionsProps {
 }
 
 export default function PlayerActions({ playerId }: PlayerActionsProps) {
-  const { addBuyIn, removeBuyIn, getPlayer } = usePlayerStore();
+  const { updateCredits: addBuyIn, removeBuyIn, getPlayer } = usePlayerStore();
   const player = getPlayer(playerId);
 
   const handleAddBuyIn = () => {
@@ -24,7 +24,7 @@ export default function PlayerActions({ playerId }: PlayerActionsProps) {
       <CardBody>
         <div className="flex flex-col gap-2">
           <div className="text-sm font-medium mb-2">
-            {player.name} - ${player.buyIns}
+            {player.name} - ${player.buyIn}
           </div>
           <Button size="sm" onClick={handleAddBuyIn}>
             Add $100

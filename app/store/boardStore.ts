@@ -1,43 +1,29 @@
 import { create } from "zustand";
 
 export interface Board {
-  buyIn: number;
+  lastRebuy: number;
   playersAmount: number;
 }
 
 interface BoardStore {
   board: Board;
-  setBoardBuyin: (buyIn: number) => void;
-  setBoardPlayersAmount: (playersAmount: number) => void;
+  setLastRebuy: (buyIn: number) => void;
+  getLastRebuy: () => number;
 }
 
 export const useBoardStore = create<BoardStore>((set, get) => ({
   board: {
-    buyIn: 0,
+    lastRebuy: 40,
     playersAmount: 0,
   },
 
-  setBoardBuyin: (buyIn: number) => {
+  setLastRebuy: (buyIn: number) => {
     set((state) => ({
-      board: { ...state.board, buyIn },
+      board: { ...state.board, lastRebuy: buyIn },
     }));
   },
 
-  setBoardPlayersAmount: (playersAmount: number) => {
-    set((state) => ({
-      board: { ...state.board, playersAmount },
-    }));
-  },
-
-  getBoard: () => {
-    return get().board;
-  },
-
-  getBoardBuyin: () => {
-    return get().board.buyIn;
-  },
-
-  getBoardPlayersAmount: () => {
-    return get().board.playersAmount;
+  getLastRebuy: () => {
+    return get().board.lastRebuy;
   },
 }));
