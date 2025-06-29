@@ -2,37 +2,42 @@ import classNames from "classnames";
 
 import styles from "./player.module.css";
 import { Player } from "@/app/store/playerStore";
-import { Card, CardBody } from "@heroui/react";
+import { Avatar, Badge } from "@heroui/react";
+
+const calcPlayerName = (player: Player): string => {
+  const name = player.name;
+  const [firstName, lastName] = name.split(" ");
+  return lastName
+    ? (firstName[0] + lastName[0]).toUpperCase()
+    : firstName.slice(0, 2).toLocaleUpperCase();
+};
 
 export const PlayerCard = ({
-  toggleFocus,
   player,
   isFocused,
+  onPlayerClick,
 }: {
-  toggleFocus: () => void;
   player: Player;
   isFocused: boolean;
+  onPlayerClick: () => void;
 }) => {
   return (
-    <Card
-      classNames={{
-        base: classNames(styles.playerCard, {
-          [styles.focused]: isFocused,
-        }),
-        body: styles.playerCardBody,
-      }}
+    <div
+      className={classNames(styles.playerCard, {
+        [styles.focused]: isFocused,
+      })}
+      onClick={onPlayerClick}
     >
-      <CardBody>
-        <div
-          className={classNames(styles.playerName)}
-          onClick={() => {
-            toggleFocus();
-          }}
-        >
-          {player.name || "Name" + player.id}
-        </div>
-        <div className={styles.playerCredits}>{player.credits}</div>
-      </CardBody>
-    </Card>
+      <Badge color="primary" content={player.credits}>
+        <Avatar
+          showFallback
+          name={calcPlayerName(player)}
+          isBordered={isFocused}
+          color={isFocused ? "success" : "default"}
+          size={isFocused ? "lg" : "md"}
+          //   radius={isFocused ? "md" : "full"}
+        />
+      </Badge>
+    </div>
   );
 };

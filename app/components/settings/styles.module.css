@@ -1,0 +1,9 @@
+.settingsContainer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+}
+.settingsIcon {
+  z-index: 10;
+}

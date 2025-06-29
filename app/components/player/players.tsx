@@ -6,9 +6,8 @@ import PlusButton from "./plusButton/plusButton";
 
 export default function Players() {
   const [focusedPlayerId, setFocusedPlayerId] = useState<number | null>(null);
-  const { addPlayer, getPlayersAmount, getPlayersIds, nextPlayerId, players } =
+  const { addPlayer, getPlayersAmount, getPlayersIds, nextPlayerId } =
     usePlayerStore();
-  console.log(players);
   const playersAmount = getPlayersAmount();
 
   const getPlusButtonLocation = () => {
@@ -50,6 +49,14 @@ export default function Players() {
       />
     );
   };
+
+  //Release focus when clicking outside of the board
+  document.addEventListener("click", (event) => {
+    const target = event.target as HTMLElement;
+    if (target.closest("#board-background-id")) {
+      setFocusedPlayerId(null);
+    }
+  });
 
   return (
     <>

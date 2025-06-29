@@ -6,7 +6,7 @@ export interface Player {
   id: number;
   rowIndex: number;
   columnIndex: number;
-  name?: string;
+  name: string;
   credits: number;
 }
 
@@ -70,7 +70,7 @@ export const usePlayerStore = create<PlayerStore>((set, get) => ({
       rowIndex: newPlayerLocation.row,
       columnIndex: newPlayerLocation.column,
       credits: 0,
-      name: undefined,
+      name: "Name " + newPlayerId,
     };
     let newPlayers = [...get().players, newPlayer];
     if (newPlayerId >= 4) {
@@ -83,6 +83,7 @@ export const usePlayerStore = create<PlayerStore>((set, get) => ({
   },
 
   updatePlayer: (id, updates) => {
+    console.log("updatePlayer", id, updates);
     set((state) => ({
       players: state.players.map((player) =>
         player.id === id ? { ...player, ...updates } : player

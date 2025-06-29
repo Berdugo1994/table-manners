@@ -10,6 +10,10 @@
   height: 100%;
   cursor: pointer;
   animation: playerFadeIn 0.1s ease-in-out forwards;
+  padding: 2px;
+  &.focused {
+    padding: 0px;
+  }
 }
 
 @keyframes playerFadeIn {
@@ -22,13 +26,12 @@
 }
 
 .playerCard {
-  width: 100%;
-  height: 100%;
-  /* padding: 4px; */
+  /* width: 100%; */
+  /* height: 100%; */
   &.focused {
     /* border: 1px solid rgba(255, 255, 255, 0.5); */
-    border-radius: 2px;
-    box-shadow: 0 0 10px 0 rgba(255, 255, 255, 0.5);
+    /* border-radius: 2px; */
+    /* box-shadow: 0 0 10px 0 rgba(255, 255, 255, 0.5); */
   }
 }
 

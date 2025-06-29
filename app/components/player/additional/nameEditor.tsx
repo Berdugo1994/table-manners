@@ -30,7 +30,8 @@ export const NameEditor = ({
           inputWrapper: "min-w-[100px]",
         }}
         ref={nameInputRef}
-        placeholder={player?.name ?? "Name" + player.id}
+        placeholder={player.name}
+        defaultValue={player.name}
         type="text"
         size="sm"
         onKeyDown={(e) => {

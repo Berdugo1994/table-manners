@@ -8,7 +8,6 @@ import { Player } from "../../../store/playerStore";
 import { ActionState } from "./types";
 
 export const Menu = ({
-  toggleFocus,
   player,
   updatePartlyState,
 }: {
@@ -37,7 +36,12 @@ export const Menu = ({
             <div>Rebuy</div>
           </div>
         </DropdownItem>
-        <DropdownItem key="editName" onPress={toggleFocus}>
+        <DropdownItem
+          key="editName"
+          onPress={() => {
+            updatePartlyState({ editor: true, menu: false });
+          }}
+        >
           <div className="flex flex-row gap-2 items-center justify-start">
             <i className="pi pi-pencil" />
             <div>Edit</div>

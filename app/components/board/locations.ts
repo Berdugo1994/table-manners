@@ -14,11 +14,11 @@ export const getPlayerLocation = (
       if (playerIndex === 0) {
         return { row: 1, column: 11 };
       } else if (playerIndex === 1) {
-        return { row: 3, column: 21 };
+        return { row: 3, column: 20 };
       } else if (playerIndex === 2) {
         return { row: 5, column: 11 };
       } else if (playerIndex === 3) {
-        return { row: 3, column: 1 };
+        return { row: 3, column: 2 };
       }
       throw new Error("Player index out of bounds");
 
@@ -26,19 +26,19 @@ export const getPlayerLocation = (
       if (playerIndex === 0) {
         return { row: 1, column: 6 };
       } else if (playerIndex === 1) {
-        return { row: 2, column: 21 };
+        return { row: 2, column: 20 };
       } else if (playerIndex === 2) {
         return { row: 5, column: 16 };
       } else if (playerIndex === 3) {
-        return { row: 4, column: 1 };
+        return { row: 4, column: 2 };
       } else if (playerIndex === 4) {
         return { row: 1, column: 16 };
       } else if (playerIndex === 5) {
-        return { row: 4, column: 21 };
+        return { row: 4, column: 20 };
       } else if (playerIndex === 6) {
         return { row: 5, column: 6 };
       } else if (playerIndex === 7) {
-        return { row: 2, column: 1 };
+        return { row: 2, column: 2 };
       }
       throw new Error("Player index out of bounds");
     default:

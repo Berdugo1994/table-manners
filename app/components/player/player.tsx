@@ -9,6 +9,7 @@ import { Menu } from "./additional/menu";
 import { Rebuy } from "./additional/rebuy";
 import { ActionState } from "./additional/types";
 import { PlayerCard } from "./playerCard";
+import { Editor } from "./additional/editor";
 
 interface PlayerProps {
   playerId: number;
@@ -17,9 +18,10 @@ interface PlayerProps {
 }
 
 const defaultActionState: ActionState = {
-  menu: false,
   name: true,
+  menu: false,
   rebuy: false,
+  editor: false,
 };
 
 export default function Player(props: PlayerProps) {
@@ -40,10 +42,18 @@ export default function Player(props: PlayerProps) {
 
   useEffect(() => {
     if (isFocused && !actionState.name) {
+      //Open menu when its not first opening.
       updatePartlyState({ menu: true });
     }
+
     if (!isFocused) {
-      updatePartlyState({ menu: false, name: false, rebuy: false });
+      //Reset all states when player is closed
+      updatePartlyState({
+        menu: false,
+        name: false,
+        rebuy: false,
+        editor: false,
+      });
     }
   }, [isFocused]);
 
@@ -63,6 +73,9 @@ export default function Player(props: PlayerProps) {
     if (actionState.rebuy) {
       return <Rebuy player={player} toggleFocus={toggleFocus} />;
     }
+    if (actionState.editor) {
+      return <Editor player={player} toggleFocus={toggleFocus} />;
+    }
 
     return null;
   };
@@ -70,9 +83,9 @@ export default function Player(props: PlayerProps) {
   const getPlayerCellStyle = (playerColumn: number, playerRow: number) => {
     const start =
       playerColumn -
-      (playerColumn === 1
+      (playerColumn === 2
         ? 0
-        : playerColumn === 21
+        : playerColumn === 20
         ? BoardSize.PLAYER_CELL_WIDTH - 1
         : 1);
     const end = start + BoardSize.PLAYER_CELL_WIDTH;
@@ -81,6 +94,12 @@ export default function Player(props: PlayerProps) {
       gridColumnEnd: end,
       gridRowStart: playerRow,
     };
+  };
+  const onPlayerClick = () => {
+    if (actionState.name) {
+      return;
+    }
+    toggleFocus();
   };
 
   return (
@@ -91,9 +110,9 @@ export default function Player(props: PlayerProps) {
       style={getPlayerCellStyle(columnIndex, rowIndex)}
     >
       <PlayerCard
-        toggleFocus={toggleFocus}
         player={player}
         isFocused={isFocused}
+        onPlayerClick={onPlayerClick}
       />
       <AdditionalPlayerLayout rowIndex={rowIndex} columnIndex={columnIndex}>
         {getAdditionalContent()}

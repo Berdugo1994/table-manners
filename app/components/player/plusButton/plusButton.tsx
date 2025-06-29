@@ -1,5 +1,6 @@
 import { Chip } from "@heroui/react";
 import styles from "./plusButton.module.css";
+import { getPlayerCellStyle } from "../utils";
 
 export default function PlusButton({
   row,
@@ -10,12 +11,17 @@ export default function PlusButton({
   column: number;
   addPlayer: () => void;
 }) {
+  const { gridColumnStart, gridColumnEnd, gridRowStart } = getPlayerCellStyle(
+    column,
+    row
+  );
   return (
     <div
       className={styles.plusButtonContainer}
       style={{
-        gridColumnStart: column,
-        gridRowStart: row,
+        gridColumnStart,
+        gridColumnEnd,
+        gridRowStart,
       }}
     >
       <Chip

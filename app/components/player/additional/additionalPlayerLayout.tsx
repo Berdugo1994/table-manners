@@ -6,6 +6,8 @@ interface AdditionalPlayerLayoutProps {
   columnIndex: number;
 }
 
+const MARGIN_FROM_CARD = "calc(50% + 45px)";
+
 export default function AdditionalPlayerLayout({
   children,
   rowIndex,
@@ -21,34 +23,30 @@ export default function AdditionalPlayerLayout({
       case "top":
         return {
           ...baseStyles,
-          bottom: "100%",
+          bottom: MARGIN_FROM_CARD,
           left: "50%",
           transform: "translateX(-50%)",
-          marginBottom: "8px",
         };
       case "bottom":
         return {
           ...baseStyles,
-          top: "100%",
+          top: MARGIN_FROM_CARD,
           left: "50%",
           transform: "translateX(-50%)",
-          marginTop: "8px",
         };
       case "left":
         return {
           ...baseStyles,
-          right: "100%",
+          right: MARGIN_FROM_CARD,
           top: "50%",
           transform: "translateY(-50%)",
-          marginRight: "8px",
         };
       case "right":
         return {
           ...baseStyles,
-          left: "100%",
+          left: MARGIN_FROM_CARD,
           top: "50%",
           transform: "translateY(-50%)",
-          marginLeft: "8px",
         };
       default:
         return baseStyles;
@@ -61,8 +59,8 @@ export default function AdditionalPlayerLayout({
   ): "top" | "bottom" | "left" | "right" => {
     if (row === 1) return "bottom"; // Player 0 (top)
     if (row === 5) return "top"; // Player 2 (bottom)
-    if (column === 21) return "left"; // Player 1 (right)
-    if (column === 1) return "right"; // Player 3 (left)
+    if (column === 20) return "left"; // Player 1 (right)
+    if (column === 2) return "right"; // Player 3 (left)
 
     return "bottom";
   };
