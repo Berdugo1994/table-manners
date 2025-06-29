@@ -6,7 +6,7 @@ interface PlayerActionsProps {
 }
 
 export default function PlayerActions({ playerId }: PlayerActionsProps) {
-  const { updateCredits: addBuyIn, removeBuyIn, getPlayer } = usePlayerStore();
+  const { addCredits: addBuyIn, removeBuyIn, getPlayer } = usePlayerStore();
   const player = getPlayer(playerId);
 
   const handleAddBuyIn = () => {
