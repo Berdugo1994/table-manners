@@ -15,16 +15,19 @@ export default function QuickStartForm({
   setNumPlayers,
   buyIn,
   setBuyIn,
+  addCandidatePlayer,
 }: {
   numPlayers: number;
   setNumPlayers: (numPlayers: number) => void;
   buyIn: number;
   setBuyIn: (buyIn: number) => void;
+  addCandidatePlayer: () => void;
 }) {
   return (
     <Card className="m-1">
       <CardBody className="flex flex-col items-center justify-center gap-2">
         <div className="flex items-center justify-center gap-2">
+          <Button onPress={() => addCandidatePlayer()}>Add Player</Button>
           <div id="num-players">
             <Dropdown className="w-20" placement="bottom-start">
               <DropdownTrigger>

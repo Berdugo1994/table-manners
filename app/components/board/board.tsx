@@ -1,15 +1,19 @@
 "use client";
 
 import styles from "./board.module.css";
-import Players from "./players";
+import Players from "../player/players";
+import Settings from "../settings/settings";
 
-export default function Board({ playersAmount }: { playersAmount: number }) {
-  const board = () => <div className={styles.boardAsBackground}></div>;
+export default function Board() {
+  const board = () => (
+    <div id="board-background-id" className={styles.boardAsBackground}></div>
+  );
 
   return (
     <div className={styles.boardContainer}>
       {board()}
-      <Players playersAmount={playersAmount} />
+      <Players />
+      <Settings />
     </div>
   );
 }
