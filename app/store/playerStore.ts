@@ -12,7 +12,7 @@ export interface Player {
 
 interface PlayerStore {
   players: Player[];
-  addPlayer: () => void;
+  addPlayer: (initialCredits: number) => void;
   updatePlayer: (id: number, updates: Partial<Player>) => void;
   removePlayer: (id: number) => void;
   addCredits: (id: number, amount: number) => void;
@@ -25,6 +25,7 @@ interface PlayerStore {
     rowIndex: number,
     columnIndex: number
   ) => Player | undefined;
+  getAllCredits: () => number;
 }
 
 export const usePlayerStore = create<PlayerStore>((set, get) => ({
@@ -60,7 +61,7 @@ export const usePlayerStore = create<PlayerStore>((set, get) => ({
   //   },
   // ],
 
-  addPlayer: () => {
+  addPlayer: (initialCredits: number) => {
     const playersAmount = get().getPlayersAmount();
     const newPlayerId = get().nextPlayerId();
     const newPlayerLocation = getPlayerLocation(newPlayerId, playersAmount + 1);
@@ -69,7 +70,7 @@ export const usePlayerStore = create<PlayerStore>((set, get) => ({
       id: newPlayerId,
       rowIndex: newPlayerLocation.row,
       columnIndex: newPlayerLocation.column,
-      credits: 0,
+      credits: initialCredits,
       name: "Name " + newPlayerId,
     };
     let newPlayers = [...get().players, newPlayer];
@@ -136,5 +137,9 @@ export const usePlayerStore = create<PlayerStore>((set, get) => ({
 
   nextPlayerId: () => {
     return get().getPlayersAmount();
+  },
+
+  getAllCredits: () => {
+    return get().players.reduce((acc, player) => acc + player.credits, 0);
   },
 }));

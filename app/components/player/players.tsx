@@ -3,8 +3,10 @@ import { getPlayerLocation } from "../board/locations";
 import Player from "./player";
 import { usePlayerStore } from "../../store/playerStore";
 import PlusButton from "./plusButton/plusButton";
+import { useBoardStore } from "@/app/store/boardStore";
 
 export default function Players() {
+  const { getBuyIn } = useBoardStore();
   const [focusedPlayerId, setFocusedPlayerId] = useState<number | null>(null);
   const { addPlayer, getPlayersAmount, getPlayersIds, nextPlayerId } =
     usePlayerStore();
@@ -43,7 +45,7 @@ export default function Players() {
         row={location.row}
         column={location.column}
         addPlayer={() => {
-          addPlayer();
+          addPlayer(getBuyIn() ?? 0);
           setFocusedPlayerId(createdPlayerId);
         }}
       />

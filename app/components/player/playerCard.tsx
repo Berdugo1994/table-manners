@@ -3,14 +3,7 @@ import classNames from "classnames";
 import styles from "./player.module.css";
 import { Player } from "@/app/store/playerStore";
 import { Avatar, Badge } from "@heroui/react";
-
-const calcPlayerName = (player: Player): string => {
-  const name = player.name;
-  const [firstName, lastName] = name.split(" ");
-  return lastName
-    ? (firstName[0] + lastName[0]).toUpperCase()
-    : firstName.slice(0, 2).toLocaleUpperCase();
-};
+import { calcPlayerName } from "@/app/utils/names";
 
 export const PlayerCard = ({
   player,
@@ -31,7 +24,7 @@ export const PlayerCard = ({
       <Badge color="primary" content={player.credits}>
         <Avatar
           showFallback
-          name={calcPlayerName(player)}
+          name={calcPlayerName(player.name)}
           isBordered={isFocused}
           color={isFocused ? "success" : "default"}
           size={isFocused ? "lg" : "md"}

@@ -19,7 +19,11 @@ export const NameEditor = ({
   }, []);
 
   const onSave = () => {
-    updatePlayerName(player.id, nameInputRef.current?.value);
+    let name = nameInputRef.current?.value;
+    if (!name || name.length == 0) {
+      name = player.name;
+    }
+    updatePlayerName(player.id, name);
     toggleFocus();
   };
   return (
@@ -31,7 +35,7 @@ export const NameEditor = ({
         }}
         ref={nameInputRef}
         placeholder={player.name}
-        defaultValue={player.name}
+        defaultValue={""}
         type="text"
         size="sm"
         onKeyDown={(e) => {
