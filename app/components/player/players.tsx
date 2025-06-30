@@ -51,7 +51,7 @@ export default function Players() {
   };
 
   //Release focus when clicking outside of the board
-  document.addEventListener("click", (event) => {
+  document?.addEventListener("click", (event) => {
     const target = event.target as HTMLElement;
     if (target.closest("#board-background-id")) {
       setFocusedPlayerId(null);

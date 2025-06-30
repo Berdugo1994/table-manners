@@ -14,7 +14,7 @@ export const Rebuy = ({
   toggleFocus: () => void;
 }) => {
   const { getLastRebuy, setLastRebuy } = useBoardStore();
-  const { updateCredits } = usePlayerStore();
+  const { addCredits } = usePlayerStore();
   const lastRebuy = getLastRebuy();
   const [playerRebuy, setPlayerRebuy] = useState(lastRebuy);
   return (
@@ -35,8 +35,7 @@ export const Rebuy = ({
           <i
             className="pi pi-check text-success"
             onClick={() => {
-              console.log("playerRebuy", playerRebuy);
-              updateCredits(player.id, playerRebuy);
+              addCredits(player.id, playerRebuy);
               setLastRebuy(playerRebuy);
               toggleFocus();
             }}

@@ -15,7 +15,7 @@ interface PlayerStore {
   addPlayer: () => void;
   updatePlayer: (id: number, updates: Partial<Player>) => void;
   removePlayer: (id: number) => void;
-  updateCredits: (id: number, amount: number) => void;
+  addCredits: (id: number, amount: number) => void;
   getPlayer: (id: number) => Player | undefined;
   getPlayersIds: () => number[];
   getPlayersAmount: () => number;
@@ -97,10 +97,12 @@ export const usePlayerStore = create<PlayerStore>((set, get) => ({
     }));
   },
 
-  updateCredits: (id, amount) => {
+  addCredits: (id, amount) => {
     set((state) => ({
       players: state.players.map((player) =>
-        player.id === id ? { ...player, credits: amount } : player
+        player.id === id
+          ? { ...player, credits: player.credits + amount }
+          : player
       ),
     }));
   },
