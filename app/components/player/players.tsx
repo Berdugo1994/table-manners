@@ -8,7 +8,7 @@ import { useBoardStore } from "@/app/store/boardStore";
 export default function Players() {
   const { getBuyIn } = useBoardStore();
   const [focusedPlayerId, setFocusedPlayerId] = useState<number | null>(null);
-  const { addPlayer, getPlayersAmount, getPlayersIds, nextPlayerId } =
+  const { createPlayer, getPlayersAmount, getPlayersIds, nextPlayerId } =
     usePlayerStore();
   const playersAmount = getPlayersAmount();
 
@@ -45,7 +45,7 @@ export default function Players() {
         row={location.row}
         column={location.column}
         addPlayer={() => {
-          addPlayer(getBuyIn() ?? 0);
+          createPlayer(getBuyIn() ?? 0);
           setFocusedPlayerId(createdPlayerId);
         }}
       />
@@ -53,6 +53,7 @@ export default function Players() {
   };
 
   //Release focus when clicking outside of the board
+  if (!document) return null;
   document?.addEventListener("click", (event) => {
     const target = event.target as HTMLElement;
     if (target.closest("#board-background-id")) {

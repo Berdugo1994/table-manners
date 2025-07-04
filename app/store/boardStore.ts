@@ -6,6 +6,8 @@ export interface Board {
   playersAmount: number;
   ratio: number | null;
   gameName: string;
+  isBoardInitialized: boolean;
+  gameId: number | null;
 }
 
 interface BoardStore {
@@ -14,9 +16,16 @@ interface BoardStore {
   setLastRebuy: (lastRebuy: number) => void;
   setRatio: (ratio: number) => void;
   getRatio: () => number | null;
-  initBoard: (gameName: string, ratio: number, buyIn: number) => void;
+  initBoard: (
+    gameId: number,
+    gameName: string,
+    ratio: number,
+    buyIn: number
+  ) => void;
   getBuyIn: () => number | null;
   getGameName: () => string;
+  isBoardInitialized: () => boolean;
+  getGameId: () => number | null;
 }
 
 export const useBoardStore = create<BoardStore>((set, get) => ({
@@ -26,6 +35,8 @@ export const useBoardStore = create<BoardStore>((set, get) => ({
     playersAmount: 0,
     ratio: null,
     gameName: "",
+    isBoardInitialized: false,
+    gameId: null,
   },
 
   setLastRebuy: (lastRebuy: number) => {
@@ -48,13 +59,20 @@ export const useBoardStore = create<BoardStore>((set, get) => ({
     return get().board.ratio;
   },
 
-  initBoard: (gameName: string, ratio: number, buyIn: number) => {
+  initBoard: (
+    gameId: number,
+    gameName: string,
+    ratio: number,
+    buyIn: number
+  ) => {
     set((state) => ({
       board: {
         ...state.board,
+        gameId,
         buyIn,
         ratio,
         gameName,
+        isBoardInitialized: true,
       },
     }));
   },
@@ -65,5 +83,13 @@ export const useBoardStore = create<BoardStore>((set, get) => ({
 
   getGameName: () => {
     return get().board.gameName;
+  },
+
+  isBoardInitialized: () => {
+    return get().board.isBoardInitialized;
+  },
+
+  getGameId: () => {
+    return get().board.gameId;
   },
 }));

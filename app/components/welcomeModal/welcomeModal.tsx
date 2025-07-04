@@ -5,6 +5,7 @@ import {
   ModalBody,
   ModalContent,
   ModalFooter,
+  Spinner,
 } from "@heroui/react";
 import styles from "./styles.module.css";
 import { PiHandsClapping } from "react-icons/pi";
@@ -16,9 +17,11 @@ import { Chips, Credit } from "../icons/credit";
 export const WelcomeModal = ({
   isModalOpen,
   onSubmit,
+  isLoading,
 }: {
   isModalOpen: boolean;
   onSubmit: (gameName: string, ratio: number, buyIn: number) => void;
+  isLoading: boolean;
 }) => {
   const ref = useRef<HTMLInputElement>(null);
   useEffect(() => {
@@ -53,6 +56,11 @@ export const WelcomeModal = ({
       <ModalContent>
         <ModalBody>
           <div className="flex flex-col gap-4 mt-2 p-2">
+            {isLoading && (
+              <div className="flex justify-center items-center">
+                <Spinner />
+              </div>
+            )}
             <div className="flex gap-2 items-center">
               <div
                 className={classNames(styles.inlineText, "text-2xl font-bold")}
@@ -64,6 +72,7 @@ export const WelcomeModal = ({
                 value={gameName}
                 placeholder="Game Name"
                 size="sm"
+                maxLength={20}
                 variant="bordered"
                 color="primary"
                 radius="sm"

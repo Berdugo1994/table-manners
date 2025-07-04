@@ -12,7 +12,8 @@ export interface Player {
 
 interface PlayerStore {
   players: Player[];
-  addPlayer: (initialCredits: number) => void;
+  initPlayers: (players: Player[]) => void;
+  createPlayer: (initialCredits: number, name?: string) => void;
   updatePlayer: (id: number, updates: Partial<Player>) => void;
   removePlayer: (id: number) => void;
   addCredits: (id: number, amount: number) => void;
@@ -30,38 +31,13 @@ interface PlayerStore {
 
 export const usePlayerStore = create<PlayerStore>((set, get) => ({
   players: [],
-  // players: [
-  //   {
-  //     name: "Name0",
-  //     buyIns: 0,
-  //     id: 0,
-  //     rowIndex: 1,
-  //     columnIndex: 3,
-  //   },
-  //   {
-  //     name: "Name1",
-  //     buyIns: 0,
-  //     id: 1,
-  //     rowIndex: 6,
-  //     columnIndex: 5,
-  //   },
-  //   {
-  //     name: "Name2",
-  //     buyIns: 0,
-  //     id: 2,
-  //     rowIndex: 11,
-  //     columnIndex: 3,
-  //   },
-  //   {
-  //     name: "Name3",
-  //     buyIns: 0,
-  //     id: 3,
-  //     rowIndex: 6,
-  //     columnIndex: 1,
-  //   },
-  // ],
+  initPlayers: (players: Player[]) => {
+    set(() => ({
+      players,
+    }));
+  },
 
-  addPlayer: (initialCredits: number) => {
+  createPlayer: (initialCredits: number, name?: string) => {
     const playersAmount = get().getPlayersAmount();
     const newPlayerId = get().nextPlayerId();
     const newPlayerLocation = getPlayerLocation(newPlayerId, playersAmount + 1);
@@ -71,7 +47,7 @@ export const usePlayerStore = create<PlayerStore>((set, get) => ({
       rowIndex: newPlayerLocation.row,
       columnIndex: newPlayerLocation.column,
       credits: initialCredits,
-      name: "Name " + newPlayerId,
+      name: name ? name : "Name " + newPlayerId,
     };
     let newPlayers = [...get().players, newPlayer];
     if (newPlayerId >= 4) {

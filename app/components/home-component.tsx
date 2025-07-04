@@ -1,23 +1,36 @@
 "use client";
 
-import { Button } from "@heroui/react";
-import { useRouter } from "next/navigation";
+import { Divider } from "@heroui/react";
+import { BoardMetadata, RequestType } from "../types/load";
+import { useEffect, useState } from "react";
+import RecentGames from "./homeComponent/recentGames";
+import StartGameButton from "./startGameButton/startGameButton";
+import HowToComponent from "./howTo/howToComponent";
 
 export default function HomeComponent() {
-  const router = useRouter();
+  const [recentGames, setRecentGames] = useState<BoardMetadata[] | null>(null);
+
+  useEffect(() => {
+    const fetchRecentGames = async () => {
+      const recentGamesResponse = await fetch("/cookies", {
+        method: "POST",
+        body: JSON.stringify({ requestType: RequestType.GET_RECENT_BOARDS }),
+      });
+      const recentGamesData = await recentGamesResponse.json();
+      console.log("RecentGamesData", recentGamesData);
+      setRecentGames(recentGamesData);
+    };
+    fetchRecentGames();
+  }, []);
+
   return (
-    <div className="flex flex-col items-center justify-center">
-      <h1>HomeComponent</h1>
-      <Button
-        color="primary"
-        variant="solid"
-        onPress={() => {
-          console.log("quick start");
-          router.push("/quick-start");
-        }}
-      >
-        Button
-      </Button>
+    <div className="w-full flex flex-col items-center justify-center p-4">
+      <div className="flex flex-col items-center justify-center gap-4  max-w-[500px]">
+        <RecentGames recentGames={recentGames} />
+        <Divider className="w-full radius-1" />
+        <HowToComponent />
+        <StartGameButton />
+      </div>
     </div>
   );
 }

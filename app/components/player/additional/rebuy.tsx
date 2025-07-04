@@ -1,9 +1,10 @@
-import { Card, CardBody, Divider, Slider } from "@heroui/react";
+import { addToast, Card, CardBody, Divider, Slider } from "@heroui/react";
 import { Player, usePlayerStore } from "../../../store/playerStore";
 import { useBoardStore } from "../../../store/boardStore";
 import { useState } from "react";
 import { SaveButton } from "../../saveButton/saveButton";
 import { Chips, Credit } from "../../icons/credit";
+import { updateWhileGameIsRunning } from "@/app/actions/game_actions";
 
 const MIN_REBUY = 10;
 const MAX_REBUY = 1000;
@@ -16,7 +17,7 @@ export const Rebuy = ({
   player: Player;
   toggleFocus: () => void;
 }) => {
-  const { getLastRebuy, setLastRebuy, getRatio } = useBoardStore();
+  const { getLastRebuy, setLastRebuy, getRatio, getGameId } = useBoardStore();
   const { addCredits } = usePlayerStore();
   const lastRebuy = getLastRebuy();
   const [playerRebuy, setPlayerRebuy] = useState(lastRebuy);
@@ -25,7 +26,25 @@ export const Rebuy = ({
     addCredits(player.id, playerRebuy);
     setLastRebuy(playerRebuy);
     toggleFocus();
+    setTimeout(() => {
+      const { players: updatedPlayers } = usePlayerStore.getState();
+      updateWhileGameIsRunning(getGameId(), updatedPlayers).then((res) => {
+        if (!res) {
+          console.error("Failed to update players");
+        } else {
+          console.log("Players updated");
+          addToast({
+            title: "Board saved",
+            color: "success",
+            classNames: {
+              base: "max-w-[200px]",
+            },
+          });
+        }
+      });
+    }, 1000);
   };
+
   return (
     <Card>
       <CardBody>

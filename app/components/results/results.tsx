@@ -24,10 +24,7 @@ export const Results = ({ players }: { players: FinalPlayer[] }) => {
           {players.map((player, index) => {
             const isWin = player.pnl > 0;
             return (
-              <TableRow
-                key={index}
-                // className={`${isWin ? "bg-green-500" : "bg-red-500"}`}
-              >
+              <TableRow key={index}>
                 <TableCell>{index + 1}</TableCell>
                 <TableCell>{player.name}</TableCell>
                 <TableCell>{getPnlString(player.pnl)}</TableCell>

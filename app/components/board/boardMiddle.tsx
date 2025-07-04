@@ -6,7 +6,7 @@ import { Divider } from "@heroui/react";
 import { useState } from "react";
 
 export const BoardMiddle = () => {
-  const { getGameName, getRatio } = useBoardStore();
+  const { getGameName, getRatio, isBoardInitialized } = useBoardStore();
   const { getAllCredits } = usePlayerStore();
   const [clickTimestamps, setClickTimestamps] = useState<number[]>([]);
   const checkForDoubleClick = () => {
@@ -22,6 +22,8 @@ export const BoardMiddle = () => {
       }, 10000);
     }
   };
+
+  if (!isBoardInitialized()) return null;
 
   return (
     <div className={styles.boardMiddle} onClick={checkForDoubleClick}>
