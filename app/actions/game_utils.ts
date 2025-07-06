@@ -1,7 +1,7 @@
 import { Player } from "../store/playerStore";
 import { DbPlayer } from "@/lib/model/player";
 
-export const transformPlayersToDbPlayers = (
+export const transformFinishedPlayers = (
   players: Player[],
   playersChips: number[]
 ): DbPlayer[] => {
@@ -19,5 +19,14 @@ export const transformPlayersToDbPlayers = (
     pnl: pnlPerPlayer[index],
     chips: playersChips[index],
     isWinner: index === winnerId,
+  }));
+};
+
+export const transformPlayingPlayers = (players: Player[]): DbPlayer[] => {
+  return players.map((player) => ({
+    ...player,
+    pnl: 0,
+    chips: 0,
+    isWinner: false,
   }));
 };

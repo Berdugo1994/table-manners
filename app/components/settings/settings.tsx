@@ -13,17 +13,16 @@ import { useState } from "react";
 import { finishGame } from "@/app/actions/game_actions";
 import ChipsModal from "../chipsModal/chipsModal";
 
-export default function Settings() {
+export default function Settings({ gameId }: { gameId: number }) {
   const players = usePlayerStore((state) => state.players);
   const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const router = useRouter();
   const onFinishClick = async (playersChips: number[]) => {
-    console.log("onFinishClick", players);
     setIsLoading(true);
-    const gameId = await finishGame(players, playersChips);
+    const res = await finishGame(gameId, players, playersChips);
     setIsLoading(false);
-    if (gameId) {
+    if (res) {
       router.replace(`/finish?gameId=${gameId}`);
     }
   };
