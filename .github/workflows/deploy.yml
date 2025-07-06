@@ -32,6 +32,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Debug env (no secrets shown)
+        run: env | grep -i mongo
+
       - name: Detect package manager
         id: detect-package-manager
         run: |
@@ -76,8 +79,8 @@ jobs:
       - name: Build with Next.js
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
         env:
-          MONGODB_URI: ${{ secrets.MONGO_URI }}
-          DB_NAME: ${{ secrets.MONGO_DB }}
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          DB_NAME: ${{ secrets.DB_NAME }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
