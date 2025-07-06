@@ -34,6 +34,9 @@ jobs:
 
       - name: Debug env (no secrets shown)
         run: env | grep -i mongo
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          DB_NAME: ${{ secrets.DB_NAME }}
 
       - name: Detect package manager
         id: detect-package-manager
