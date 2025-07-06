@@ -32,11 +32,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Debug env (no secrets shown)
-        run: env | grep -i mongo
+      - name: Debug secret (safe version)
+        run: echo "MONGODB_URI is set" && [ -n "${MONGODB_URI}" ] && echo "✔"
         env:
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
-          DB_NAME: ${{ secrets.DB_NAME }}
+        env:
+          MONGO_WRITTEN: "eden-written"
 
       - name: Detect package manager
         id: detect-package-manager
