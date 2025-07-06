@@ -42,7 +42,7 @@ export default function Player(props: PlayerProps) {
 
   useEffect(() => {
     if (isFocused && !actionState.name) {
-      //Open menu when its not first opening.
+      //Open menu when its not first opening
       updatePartlyState({ menu: true });
     }
 
