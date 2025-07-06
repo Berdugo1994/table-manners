@@ -1,0 +1,8 @@
+.saveButton {
+  cursor: pointer;
+}
+
+.saveButtonIcon {
+  font-size: 20px;
+  color: white;
+}

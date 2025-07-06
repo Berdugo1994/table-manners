@@ -1,0 +1,70 @@
+import { useState } from "react";
+import { getPlayerLocation } from "../board/locations";
+import Player from "./player";
+import { usePlayerStore } from "../../store/playerStore";
+import PlusButton from "./plusButton/plusButton";
+import { useBoardStore } from "@/app/store/boardStore";
+
+export default function Players() {
+  const { getBuyIn } = useBoardStore();
+  const [focusedPlayerId, setFocusedPlayerId] = useState<number | null>(null);
+  const { createPlayer, getPlayersAmount, getPlayersIds, nextPlayerId } =
+    usePlayerStore();
+  const playersAmount = getPlayersAmount();
+
+  const getPlusButtonLocation = () => {
+    const location = getPlayerLocation(playersAmount, playersAmount + 1);
+    return {
+      row: location.row,
+      column: location.column,
+    };
+  };
+
+  const renderPlayers = () => {
+    const playersIds = getPlayersIds();
+    return playersIds.map((playerId) => {
+      return (
+        <Player
+          key={playerId}
+          playerId={playerId}
+          isFocused={focusedPlayerId === playerId}
+          toggleFocus={() => {
+            setFocusedPlayerId(focusedPlayerId === playerId ? null : playerId);
+          }}
+        />
+      );
+    });
+  };
+
+  const renderPlusButton = () => {
+    if (focusedPlayerId !== null || playersAmount >= 8) return null;
+    const location = getPlusButtonLocation();
+    const createdPlayerId = nextPlayerId();
+    return (
+      <PlusButton
+        row={location.row}
+        column={location.column}
+        addPlayer={() => {
+          createPlayer(getBuyIn() ?? 0);
+          setFocusedPlayerId(createdPlayerId);
+        }}
+      />
+    );
+  };
+
+  //Release focus when clicking outside of the board
+  if (!document) return null;
+  document?.addEventListener("click", (event) => {
+    const target = event.target as HTMLElement;
+    if (target.closest("#board-background-id")) {
+      setFocusedPlayerId(null);
+    }
+  });
+
+  return (
+    <>
+      {renderPlayers()}
+      {renderPlusButton()}
+    </>
+  );
+}

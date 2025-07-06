@@ -1,0 +1,18 @@
+.additionalPlayerLayout {
+  z-index: 2;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  right: 0;
+  width: 100%;
+  width: fit-content;
+}
+
+.playerNameInputContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}

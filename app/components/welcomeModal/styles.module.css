@@ -1,0 +1,26 @@
+.welcomeModal {
+  width: 100%;
+  height: 100%;
+}
+.inlineText {
+  line-break: normal;
+  /* white-space: nowrap; */
+  min-width: fit-content;
+}
+.handsClapping {
+  font-size: 2rem;
+  color: #000000;
+}
+
+.exampleText {
+  animation: exampleText 1s 1;
+}
+
+@keyframes exampleText {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
