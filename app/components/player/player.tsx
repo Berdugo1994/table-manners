@@ -55,7 +55,7 @@ export default function Player(props: PlayerProps) {
         editor: false,
       });
     }
-  }, [isFocused]);
+  }, [isFocused, actionState.name]);
 
   const getAdditionalContent = () => {
     if (actionState.name) {

@@ -1,6 +1,6 @@
 {
-  "name": "po-clique",
-  "version": "0.1.0",
+  "name": "table-manners",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack --port 24100",

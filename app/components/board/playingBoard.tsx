@@ -40,7 +40,7 @@ export default function PlayingBoard({ gameId }: { gameId: number }) {
         }
       });
     }
-  }, [hasBoardData, gameId]);
+  }, [hasBoardData, gameId, BoardStore, PlayerStore]);
 
   return (
     <div className={styles.boardContainer}>
