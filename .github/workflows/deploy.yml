@@ -75,6 +75,9 @@ jobs:
 
       - name: Build with Next.js
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
+        env:
+          MONGODB_URI: ${{ secrets.MONGO_URI }}
+          DB_NAME: ${{ secrets.MONGO_DB }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
