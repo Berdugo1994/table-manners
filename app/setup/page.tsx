@@ -8,12 +8,6 @@ import { useRouter } from "next/navigation";
 import { RotateModal } from "../components/rotateModal/rotateModal";
 import { useOrientation } from "@uidotdev/usehooks";
 
-const checkIfHeightIsMoreThanWidth = () => {
-  const height = window.innerHeight;
-  const width = window.innerWidth;
-  return height > width;
-};
-
 export default function SetupPage() {
   const [isModalOpen, setIsModalOpen] = useState(true);
   const [isRotateModalOpen, setIsRotateModalOpen] = useState(false);
