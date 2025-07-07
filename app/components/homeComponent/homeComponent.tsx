@@ -14,10 +14,12 @@ export default function HomeComponent() {
 
   useEffect(() => {
     const fetchRecentGames = async () => {
+      console.log("fetching recent games");
       const recentGamesResponse = await fetch("/cookies", {
         method: "POST",
         body: JSON.stringify({ requestType: RequestType.GET_RECENT_BOARDS }),
       });
+      console.log("recentGamesResponse", recentGamesResponse);
       const recentGamesData = await recentGamesResponse.json();
       setRecentGames(recentGamesData);
     };
