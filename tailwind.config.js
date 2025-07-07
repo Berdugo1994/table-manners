@@ -11,6 +11,16 @@ export default {
   ],
   theme: {
     extend: {
+      colors: {
+        // Light mode colors only
+        background: "#ffffff",
+        surface: "#f3f4f6",
+        text: {
+          DEFAULT: "#171717",
+          muted: "#6b7280",
+        },
+        border: "#e5e7eb",
+      },
       gridColumnStart: {
         1: "1",
         2: "2",
@@ -27,6 +37,6 @@ export default {
       },
     },
   },
-  darkMode: "class",
+  // Remove darkMode configuration
   plugins: [heroui()],
 };
