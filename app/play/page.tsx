@@ -1,5 +1,5 @@
 "use client";
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect } from "react";
 import PlayingBoard from "../components/board/playingBoard";
 import { useSearchParams } from "next/navigation";
 import { Spinner } from "@heroui/react";
@@ -7,6 +7,14 @@ import { Spinner } from "@heroui/react";
 function GameBoard() {
   const searchParams = useSearchParams();
   const gameId = searchParams.get("gameId");
+
+  useEffect(() => {
+    if (gameId) {
+      fetch(`/cookies?gameId=${gameId}`, {
+        method: "GET",
+      });
+    }
+  }, [gameId]);
 
   if (!gameId) {
     return <div>No gameId</div>;
