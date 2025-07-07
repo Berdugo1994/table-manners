@@ -19,7 +19,6 @@ export default function HomeComponent() {
         method: "POST",
         body: JSON.stringify({ requestType: RequestType.GET_RECENT_BOARDS }),
       });
-      console.log("recentGamesResponse", recentGamesResponse);
       const recentGamesData = await recentGamesResponse.json();
       setRecentGames(recentGamesData);
     };
