@@ -9,7 +9,7 @@ export const transformFinishedPlayers = (
   const sumChips = playersChips.reduce((acc, chips) => acc + chips, 0); // 40
   const ratio = sumCredits / sumChips; // 2
   const pnlPerPlayer = players.map((player, index) =>
-    Math.round(playersChips[index] * ratio - player.credits)
+    Math.round((playersChips[index] ?? 0) * ratio - player.credits)
   );
   const winnerId = players.findIndex(
     (player) => player.credits === Math.max(...pnlPerPlayer)

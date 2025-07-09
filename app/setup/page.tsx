@@ -9,7 +9,7 @@ import { RotateModal } from "../components/rotateModal/rotateModal";
 import { useOrientation } from "@uidotdev/usehooks";
 
 export default function SetupPage() {
-  const [isModalOpen, setIsModalOpen] = useState(true);
+  const [isSetupModalOpen, setIsSetupModalOpen] = useState(true);
   const [isRotateModalOpen, setIsRotateModalOpen] = useState(false);
   const { initBoard } = useBoardStore();
   const [isLoading, setIsLoading] = useState(false);
@@ -20,7 +20,7 @@ export default function SetupPage() {
     setIsLoading(true);
     addGame(gameName, ratio, buyIn).then((response) => {
       setIsLoading(false);
-      setIsModalOpen(false);
+      setIsSetupModalOpen(false);
       if (response.acknowledged && response.gameSerialNumber) {
         initBoard(response.gameSerialNumber, gameName, ratio, buyIn);
         router.push(`/play?gameId=${response.gameSerialNumber}`);
@@ -28,22 +28,22 @@ export default function SetupPage() {
     });
   };
 
-  useEffect(() => {
-    console.log("orientation", orientation);
-    if (orientation.type === "portrait-primary") {
-      setIsRotateModalOpen(true);
-    } else {
-      setIsRotateModalOpen(false);
-    }
-  }, [orientation]);
+  // useEffect(() => {
+  //   console.log("orientation", orientation);
+  //   if (orientation.type === "portrait-primary") {
+  //     setIsRotateModalOpen(true);
+  //   } else {
+  //     setIsRotateModalOpen(false);
+  //   }
+  // }, [orientation]);
 
   return (
     <>
       <BoardBackground />
-      <RotateModal isModalOpen={isRotateModalOpen} />
+      {/* <RotateModal isModalOpen={isRotateModalOpen} /> */}
       {!isRotateModalOpen && (
         <WelcomeModal
-          isModalOpen={isModalOpen}
+          isModalOpen={isSetupModalOpen}
           onSubmit={onSubmit}
           isLoading={isLoading}
         />
