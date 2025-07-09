@@ -28,19 +28,19 @@ export default function SetupPage() {
     });
   };
 
-  useEffect(() => {
-    console.log("orientation", orientation);
-    if (orientation.type === "portrait-primary") {
-      setIsRotateModalOpen(true);
-    } else {
-      setIsRotateModalOpen(false);
-    }
-  }, [orientation]);
+  // useEffect(() => {
+  //   console.log("orientation", orientation);
+  //   if (orientation.type === "portrait-primary") {
+  //     setIsRotateModalOpen(true);
+  //   } else {
+  //     setIsRotateModalOpen(false);
+  //   }
+  // }, [orientation]);
 
   return (
     <>
       <BoardBackground />
-      <RotateModal isModalOpen={isRotateModalOpen} />
+      {/* <RotateModal isModalOpen={isRotateModalOpen} /> */}
       {!isRotateModalOpen && (
         <WelcomeModal
           isModalOpen={isSetupModalOpen}
