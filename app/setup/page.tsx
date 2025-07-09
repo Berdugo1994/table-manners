@@ -1,20 +1,21 @@
 "use client";
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
+import { useState } from "react";
 import { addGame } from "../api/game_db_utils";
 import BoardBackground from "../components/board/boardBackground";
 import { WelcomeModal } from "../components/welcomeModal/welcomeModal";
 import { useBoardStore } from "../store/boardStore";
 import { useRouter } from "next/navigation";
-import { RotateModal } from "../components/rotateModal/rotateModal";
-import { useOrientation } from "@uidotdev/usehooks";
+// import { RotateModal } from "../components/rotateModal/rotateModal";
+// import { useOrientation } from "@uidotdev/usehooks";
 
 export default function SetupPage() {
   const [isSetupModalOpen, setIsSetupModalOpen] = useState(true);
-  const [isRotateModalOpen, setIsRotateModalOpen] = useState(false);
+  // const [isRotateModalOpen, setIsRotateModalOpen] = useState(false);
   const { initBoard } = useBoardStore();
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const orientation = useOrientation();
+  // const orientation = useOrientation();
 
   const onSubmit = (gameName: string, ratio: number, buyIn: number) => {
     setIsLoading(true);
@@ -41,13 +42,13 @@ export default function SetupPage() {
     <>
       <BoardBackground />
       {/* <RotateModal isModalOpen={isRotateModalOpen} /> */}
-      {!isRotateModalOpen && (
-        <WelcomeModal
-          isModalOpen={isSetupModalOpen}
-          onSubmit={onSubmit}
-          isLoading={isLoading}
-        />
-      )}
+      {/* {!isRotateModalOpen && ( */}
+      <WelcomeModal
+        isModalOpen={isSetupModalOpen}
+        onSubmit={onSubmit}
+        isLoading={isLoading}
+      />
+      {/* )} */}
     </>
   );
 }
