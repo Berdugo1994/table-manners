@@ -9,6 +9,7 @@ import { useBoardStore } from "@/app/store/boardStore";
 import { getGameById } from "@/app/api/game_db_utils";
 import { Spinner, ToastProvider } from "@heroui/react";
 import { usePlayerStore } from "@/app/store/playerStore";
+import AddPlayersModal from "../addPlayersModal/addPlayertsModal";
 
 export default function PlayingBoard({ gameId }: { gameId: number }) {
   const BoardStore = useBoardStore();
@@ -16,6 +17,7 @@ export default function PlayingBoard({ gameId }: { gameId: number }) {
   const [hasBoardData, setHasBoardData] = useState(
     BoardStore.isBoardInitialized()
   );
+  const [shouldAddPlayer, setShouldAddPlayer] = useState<boolean | null>(null);
 
   useEffect(() => {
     if (!hasBoardData) {
@@ -32,6 +34,10 @@ export default function PlayingBoard({ gameId }: { gameId: number }) {
             game.buyIn
           );
 
+          if (game.players.length === 0) {
+            setShouldAddPlayer(true);
+          }
+
           game.players.forEach((player) => {
             PlayerStore.createPlayer(player.credits, player.name);
           });
@@ -40,7 +46,14 @@ export default function PlayingBoard({ gameId }: { gameId: number }) {
         }
       });
     }
-  }, [hasBoardData, gameId, BoardStore, PlayerStore]);
+    if (
+      hasBoardData &&
+      shouldAddPlayer === null &&
+      PlayerStore.getPlayersAmount() === 0
+    ) {
+      setShouldAddPlayer(true);
+    }
+  }, [hasBoardData, gameId, BoardStore, PlayerStore, shouldAddPlayer]);
 
   return (
     <div className={styles.boardContainer}>
@@ -51,6 +64,11 @@ export default function PlayingBoard({ gameId }: { gameId: number }) {
           <Players />
           <Settings gameId={gameId} />
         </>
+      )}
+      {shouldAddPlayer && (
+        <div className="">
+          <AddPlayersModal onClose={() => setShouldAddPlayer(false)} />
+        </div>
       )}
       {!hasBoardData && (
         <div className={styles.loadingCenter}>

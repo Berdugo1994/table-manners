@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Viewport, Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import "primeicons/primeicons.css";
@@ -33,3 +33,12 @@ export default function RootLayout({
     </html>
   );
 }
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  // Also supported by less commonly used
+  // interactiveWidget: 'resizes-visual',
+};
