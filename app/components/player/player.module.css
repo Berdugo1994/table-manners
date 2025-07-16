@@ -26,6 +26,11 @@
 }
 
 .playerCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
   /* width: 100%; */
   /* height: 100%; */
   &.focused {

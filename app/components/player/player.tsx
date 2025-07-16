@@ -10,6 +10,7 @@ import { Rebuy } from "./additional/rebuy";
 import { ActionState } from "./additional/types";
 import { PlayerCard } from "./playerCard";
 import { Editor } from "./additional/editor";
+import { Checkout } from "./additional/checkout";
 
 interface PlayerProps {
   playerId: number;
@@ -22,6 +23,7 @@ const defaultActionState: ActionState = {
   menu: false,
   rebuy: false,
   editor: false,
+  checkout: false,
 };
 
 export default function Player(props: PlayerProps) {
@@ -53,6 +55,7 @@ export default function Player(props: PlayerProps) {
         name: false,
         rebuy: false,
         editor: false,
+        checkout: false,
       });
     }
   }, [isFocused, actionState.name]);
@@ -75,6 +78,9 @@ export default function Player(props: PlayerProps) {
     }
     if (actionState.editor) {
       return <Editor player={player} toggleFocus={toggleFocus} />;
+    }
+    if (actionState.checkout) {
+      return <Checkout player={player} toggleFocus={toggleFocus} />;
     }
 
     return null;
@@ -113,8 +119,13 @@ export default function Player(props: PlayerProps) {
         player={player}
         isFocused={isFocused}
         onPlayerClick={onPlayerClick}
+        isCheckedOut={player.isCheckedOut}
       />
-      <AdditionalPlayerLayout rowIndex={rowIndex} columnIndex={columnIndex}>
+      <AdditionalPlayerLayout
+        rowIndex={rowIndex}
+        columnIndex={columnIndex}
+        playerId={playerId}
+      >
         {getAdditionalContent()}
       </AdditionalPlayerLayout>
     </div>

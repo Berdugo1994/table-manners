@@ -8,12 +8,19 @@ export interface Player {
   columnIndex: number;
   name: string;
   credits: number;
+  checkoutChips: number;
+  isCheckedOut: boolean;
 }
 
 interface PlayerStore {
   players: Player[];
   initPlayers: (players: Player[]) => void;
-  createPlayer: (initialCredits: number, name?: string) => void;
+  createPlayer: (
+    initialCredits: number,
+    name?: string,
+    checkoutChips?: number,
+    isCheckedOut?: boolean
+  ) => void;
   updatePlayer: (id: number, updates: Partial<Player>) => void;
   removePlayer: (id: number) => void;
   addCredits: (id: number, amount: number) => void;
@@ -27,6 +34,8 @@ interface PlayerStore {
     columnIndex: number
   ) => Player | undefined;
   getAllCredits: () => number;
+  getPlayerCheckoutChips: (id: number) => number;
+  setPlayerCheckoutChips: (id: number, chips: number) => void;
 }
 
 export const usePlayerStore = create<PlayerStore>((set, get) => ({
@@ -37,7 +46,12 @@ export const usePlayerStore = create<PlayerStore>((set, get) => ({
     }));
   },
 
-  createPlayer: (initialCredits: number, name?: string) => {
+  createPlayer: (
+    initialCredits: number,
+    name?: string,
+    checkoutChips?: number,
+    isCheckedOut?: boolean
+  ) => {
     const playersAmount = get().getPlayersAmount();
     const newPlayerId = get().nextPlayerId();
     const newPlayerLocation = getPlayerLocation(newPlayerId, playersAmount + 1);
@@ -48,6 +62,8 @@ export const usePlayerStore = create<PlayerStore>((set, get) => ({
       columnIndex: newPlayerLocation.column,
       credits: initialCredits,
       name: name ? name : "Name " + newPlayerId,
+      checkoutChips: checkoutChips ?? 0,
+      isCheckedOut: isCheckedOut ?? false,
     };
     let newPlayers = [...get().players, newPlayer];
     if (newPlayerId >= 4) {
@@ -102,6 +118,19 @@ export const usePlayerStore = create<PlayerStore>((set, get) => ({
     );
   },
 
+  getPlayerCheckoutChips: (id) => {
+    return get().players.find((player) => player.id === id)?.checkoutChips || 0;
+  },
+
+  setPlayerCheckoutChips: (id, chips) => {
+    set((state) => ({
+      players: state.players.map((player) =>
+        player.id === id
+          ? { ...player, checkoutChips: chips, isCheckedOut: true }
+          : player
+      ),
+    }));
+  },
   updatePlayerName: (id, name?: string) => {
     name = name ? name : "Name" + id;
     set((state) => ({
