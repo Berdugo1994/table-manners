@@ -7,4 +7,6 @@ export type DbPlayer = {
   chips: number;
   pnl: number;
   isWinner: boolean;
+  checkoutChips: number;
+  isCheckedOut: boolean;
 };

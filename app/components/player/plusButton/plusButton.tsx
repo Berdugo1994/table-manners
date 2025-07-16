@@ -47,6 +47,16 @@ export const CustomPlusButton = ({ onClick }: { onClick: () => void }) => {
   );
 };
 
+export const CustomMinusButton = ({ onClick }: { onClick: () => void }) => {
+  return (
+    <div className={styles.minusButtonContainer}>
+      <Chip color="danger" onClick={onClick}>
+        -
+      </Chip>
+    </div>
+  );
+};
+
 export const CustomRemoveButton = ({ onClick }: { onClick: () => void }) => {
   return (
     <div className={styles.removeButtonContainer}>

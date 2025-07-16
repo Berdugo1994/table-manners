@@ -12,18 +12,28 @@ import {
   ModalFooter,
   ModalHeader,
 } from "@heroui/react";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   CustomPlusButton,
   CustomRemoveButton,
 } from "../player/plusButton/plusButton";
 import { usePlayerStore } from "@/app/store/playerStore";
 import { useBoardStore } from "@/app/store/boardStore";
+import { Players } from "@/app/consts/rules";
 
 export default function AddPlayersModal({ onClose }: { onClose: () => void }) {
   const { getBuyIn } = useBoardStore();
   const PlayerStore = usePlayerStore();
   const [playersToAdd, setPlayersToAdd] = useState<string[]>([""]);
+  const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+
+  useEffect(() => {
+    // Focus the last input when playersToAdd changes
+    const lastIndex = playersToAdd.length - 1;
+    if (inputRefs.current[lastIndex]) {
+      inputRefs.current[lastIndex]?.focus();
+    }
+  }, [playersToAdd.length]);
 
   const handleAddPlayer = () => {
     setPlayersToAdd([...playersToAdd, ""]);
@@ -31,12 +41,20 @@ export default function AddPlayersModal({ onClose }: { onClose: () => void }) {
 
   const handleRemovePlayer = (indexToRemove: number) => {
     setPlayersToAdd(playersToAdd.filter((_, index) => index !== indexToRemove));
+    // Update refs array
+    inputRefs.current = inputRefs.current.filter(
+      (_, index) => index !== indexToRemove
+    );
   };
 
   const handlePlayerNameChange = (index: number, newValue: string) => {
     setPlayersToAdd(
       playersToAdd.map((player, i) => (i === index ? newValue : player))
     );
+  };
+
+  const setInputRef = (index: number) => (el: HTMLInputElement | null) => {
+    inputRefs.current[index] = el;
   };
 
   return (
@@ -48,7 +66,9 @@ export default function AddPlayersModal({ onClose }: { onClose: () => void }) {
     >
       <ModalContent>
         <ModalHeader>
-          <div>Add Players</div>
+          <div>
+            Add Players {`${playersToAdd.length}/${Players.MAX_PLAYERS}`}
+          </div>
         </ModalHeader>
         <ModalBody>
           <div className="flex gap-2 flex-wrap">
@@ -71,6 +91,7 @@ export default function AddPlayersModal({ onClose }: { onClose: () => void }) {
                       size={"md"}
                     />
                     <Input
+                      ref={setInputRef(index)}
                       className="w-20"
                       maxLength={20}
                       value={player}

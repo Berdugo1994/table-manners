@@ -90,3 +90,6 @@
   z-index: 100;
   color: white;
 }
+.boardMiddleTextTitle {
+  text-align: center;
+}

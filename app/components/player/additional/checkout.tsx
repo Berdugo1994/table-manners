@@ -1,31 +1,34 @@
 import { addToast, Card, CardBody, Divider, Slider } from "@heroui/react";
 import { Player, usePlayerStore } from "../../../store/playerStore";
 import { useBoardStore } from "../../../store/boardStore";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { SaveButton } from "../../saveButton/saveButton";
 import { Chips, Credit } from "../../icons/credit";
 import { updateWhileGameIsRunning } from "@/app/actions/game_actions";
 import { CustomMinusButton, CustomPlusButton } from "../plusButton/plusButton";
 
-const MIN_REBUY = 10;
-const MAX_REBUY = 100;
-const STEP_REBUY = 5;
+const STEP_CHECKOUT = 5;
 
-export const Rebuy = ({
+export const Checkout = ({
   player,
   toggleFocus,
 }: {
   player: Player;
   toggleFocus: () => void;
 }) => {
-  const { getLastRebuy, setLastRebuy, getRatio, getGameId } = useBoardStore();
-  const { addCredits } = usePlayerStore();
-  const lastRebuy = getLastRebuy();
-  const [playerRebuy, setPlayerRebuy] = useState(lastRebuy);
+  const { getGameId, getRatio } = useBoardStore();
+  const { setPlayerCheckoutChips, getPlayerCheckoutChips, getAllCredits } =
+    usePlayerStore();
+  const [currentPlayerCheckoutChips, setCurrentPlayerCheckoutChips] = useState(
+    getPlayerCheckoutChips(player.id)
+  );
+
+  const maxChips = useMemo(() => {
+    return Math.round(getAllCredits() * getRatio());
+  }, [getAllCredits, getRatio]);
 
   const onSave = () => {
-    addCredits(player.id, playerRebuy);
-    setLastRebuy(playerRebuy);
+    setPlayerCheckoutChips(player.id, currentPlayerCheckoutChips);
     toggleFocus();
     setTimeout(() => {
       const { players: updatedPlayers } = usePlayerStore.getState();
@@ -53,30 +56,36 @@ export const Rebuy = ({
           <div className="flex items-end gap-0">
             <CustomMinusButton
               onClick={() => {
-                setPlayerRebuy(playerRebuy - STEP_REBUY);
+                setCurrentPlayerCheckoutChips(
+                  currentPlayerCheckoutChips - STEP_CHECKOUT
+                );
               }}
             />
             <Slider
               className="w-[150px]"
-              defaultValue={lastRebuy}
-              label="Rebuy "
-              maxValue={MAX_REBUY}
-              minValue={MIN_REBUY}
-              step={STEP_REBUY}
-              value={playerRebuy}
-              onChange={(value) => setPlayerRebuy(value as number)}
+              defaultValue={player.checkoutChips}
+              label="Checkout "
+              maxValue={maxChips}
+              minValue={0}
+              step={STEP_CHECKOUT}
+              value={currentPlayerCheckoutChips}
+              onChange={(value) =>
+                setCurrentPlayerCheckoutChips(value as number)
+              }
               // eslint-disable-next-line @typescript-eslint/no-unused-vars
               renderValue={({ children, ...props }) => (
                 <output {...props}>
                   <div className="flex h-5 items-center space-x-1 text-small">
                     <div className="ml-1 flex items-center ">
                       <Credit />
-                      <div>{playerRebuy}</div>
+                      <div>
+                        {Math.round(currentPlayerCheckoutChips / getRatio())}
+                      </div>
                     </div>
                     <Divider orientation="vertical" />
                     <div className="flex items-center ">
                       <Chips />
-                      <div>{playerRebuy * (getRatio() ?? 0)}</div>
+                      <div>{currentPlayerCheckoutChips}</div>
                     </div>
                   </div>
                 </output>
@@ -84,7 +93,9 @@ export const Rebuy = ({
             />
             <CustomPlusButton
               onClick={() => {
-                setPlayerRebuy(playerRebuy + STEP_REBUY);
+                setCurrentPlayerCheckoutChips(
+                  currentPlayerCheckoutChips + STEP_CHECKOUT
+                );
               }}
             />
           </div>

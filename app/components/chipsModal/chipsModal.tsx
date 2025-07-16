@@ -1,5 +1,6 @@
 import { usePlayerStore } from "@/app/store/playerStore";
 import {
+  Button,
   Chip,
   Input,
   Modal,
@@ -10,9 +11,10 @@ import {
 } from "@heroui/react";
 import { SaveButton } from "../saveButton/saveButton";
 import { PlayerCard } from "../player/playerCard";
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useBoardStore } from "@/app/store/boardStore";
 import classNames from "classnames";
+import { MdSafetyDivider } from "react-icons/md";
 type ChipType = number | undefined;
 const isValidChip = (chip: ChipType) => {
   return chip === 0 || (chip && chip > 0);
@@ -31,7 +33,17 @@ export default function ChipsModal({
   const credits = usePlayerStore((state) => state.getAllCredits());
   const totalChips = credits * (getRatio() ?? 0);
   const players = usePlayerStore((state) => state.players);
-  const [tempChips, setTempChips] = useState<number[]>(players.map(() => 0));
+  const [tempChips, setTempChips] = useState<number[]>(
+    players.map((player) => player.checkoutChips)
+  );
+  const calcDivide = (chipsLeft: number, playersAmount: number) => {
+    return chipsLeft / playersAmount;
+  };
+
+  useEffect(() => {
+    setTempChips(players.map((player) => player.checkoutChips));
+  }, [players]);
+
   const [isSaveLoading, setIsSaveLoading] = useState(false);
   const onSave = () => {
     setIsSaveLoading(true);
@@ -40,6 +52,26 @@ export default function ChipsModal({
   const chipsLeft = tempChips.every((x) => x >= 0)
     ? totalChips - tempChips.reduce((acc, chip) => acc + chip, 0)
     : "-";
+
+  const DivideChips = useMemo(() => {
+    if (chipsLeft == "-" || chipsLeft == 0) return null;
+    const toDivide = calcDivide(chipsLeft, players.length);
+    return toDivide > 0 ? "+" + toDivide.toFixed(1) : toDivide.toFixed(1);
+  }, [chipsLeft, players]);
+
+  const onDivideChips = () => {
+    if (chipsLeft == "-" || chipsLeft == 0) return;
+    const toDivide = Math.round(calcDivide(chipsLeft, players.length));
+    const leftover = chipsLeft - toDivide * players.length;
+    setTempChips((tChips) =>
+      tChips.map((chip, index) => {
+        if (index == 0) {
+          return chip + toDivide + leftover;
+        }
+        return chip + toDivide;
+      })
+    );
+  };
 
   return (
     <>
@@ -61,11 +93,15 @@ export default function ChipsModal({
               <div className="flex flex-col gap-2">
                 {chipsLeft != "-" && chipsLeft != 0 && (
                   <div
-                    className={classNames(
-                      "h-5 flex space-x-2 justify-center mb-8"
-                    )}
+                    className={classNames("flex space-x-2 justify-center mb-2")}
                   >
-                    <Chip className="w-10 h-10">Chips Left {chipsLeft}</Chip>
+                    <Chip>Chips Left {chipsLeft}</Chip>
+                    <Button color="primary" size="sm" onPress={onDivideChips}>
+                      <div className="flex items-center gap-1">
+                        <MdSafetyDivider size={24} />
+                        <div className="text-xs">{DivideChips}</div>
+                      </div>
+                    </Button>
                   </div>
                 )}
                 <div className="flex flex-row flex-wrap gap-x-2 gap-y-1 justify-center">
@@ -78,8 +114,10 @@ export default function ChipsModal({
                         player={player}
                         isFocused={false}
                         onPlayerClick={() => {}}
+                        isCheckedOut={player.isCheckedOut}
                       />
                       <Input
+                        min={0}
                         size="sm"
                         type="number"
                         value={tempChips[index]?.toString() ?? ""}

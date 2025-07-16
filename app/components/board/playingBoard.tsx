@@ -39,7 +39,12 @@ export default function PlayingBoard({ gameId }: { gameId: number }) {
           }
 
           game.players.forEach((player) => {
-            PlayerStore.createPlayer(player.credits, player.name);
+            PlayerStore.createPlayer(
+              player.credits,
+              player.name,
+              player.checkoutChips,
+              player.isCheckedOut
+            );
           });
 
           setHasBoardData(true);

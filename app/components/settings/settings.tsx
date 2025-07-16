@@ -9,7 +9,7 @@ import {
 import classNames from "classnames";
 import { usePlayerStore } from "@/app/store/playerStore";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { finishGame } from "@/app/actions/game_actions";
 import ChipsModal from "../chipsModal/chipsModal";
 
@@ -26,6 +26,16 @@ export default function Settings({ gameId }: { gameId: number }) {
       router.replace(`/finish?gameId=${gameId}`);
     }
   };
+
+  const ChipsModalComponent = useMemo(() => {
+    return (
+      <ChipsModal
+        isOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        onFinishClick={(playersChips: number[]) => onFinishClick(playersChips)}
+      />
+    );
+  }, [isModalOpen, setIsModalOpen, onFinishClick, players]);
 
   return (
     <div className={styles.settingsContainer}>
@@ -54,11 +64,7 @@ export default function Settings({ gameId }: { gameId: number }) {
           </DropdownMenu>
         </Dropdown>
       )}
-      <ChipsModal
-        isOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
-        onFinishClick={(playersChips: number[]) => onFinishClick(playersChips)}
-      />
+      {ChipsModalComponent}
     </div>
   );
 }

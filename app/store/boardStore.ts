@@ -4,7 +4,7 @@ export interface Board {
   buyIn: number | null;
   lastRebuy: number;
   playersAmount: number;
-  ratio: number | null;
+  ratio: number;
   gameName: string;
   isBoardInitialized: boolean;
   gameId: number | null;
@@ -14,8 +14,8 @@ interface BoardStore {
   board: Board;
   getLastRebuy: () => number;
   setLastRebuy: (lastRebuy: number) => void;
-  setRatio: (ratio: number) => void;
-  getRatio: () => number | null;
+  setRatio: (ratio: number) => void; // ratio is how many chips are in 1 credit
+  getRatio: () => number;
   initBoard: (
     gameId: number,
     gameName: string,
@@ -33,7 +33,7 @@ export const useBoardStore = create<BoardStore>((set, get) => ({
     buyIn: null,
     lastRebuy: 40,
     playersAmount: 0,
-    ratio: null,
+    ratio: 25,
     gameName: "",
     isBoardInitialized: false,
     gameId: null,

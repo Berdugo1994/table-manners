@@ -3,4 +3,5 @@ export type ActionState = {
   name: boolean;
   rebuy: boolean;
   editor: boolean;
+  checkout: boolean;
 };

@@ -37,7 +37,7 @@ export const BoardMiddle = () => {
         </div>
         <Divider orientation="vertical" className="h-full bg-white mt-" />
         <div className="flex items-center">
-          <div className="mt-1">{getAllCredits() * (getRatio() ?? 0)}</div>
+          <div className="mt-1">{getAllCredits() * getRatio()}</div>
           <Chips />
         </div>
       </div>

@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 
 export const RECENT_BOARDS_COOKIE_NAME = "recent_boards_ids";
 const SEPARATOR = "_";
+const EXPIRATION_TIME = 1000 * 60 * 60 * 24 * 30 * 6; //six months
 
 export const addRecentBoardIdToCookie = async (boardId: string) => {
   let recentBoardsIdsArray: string[] = [];
@@ -34,6 +35,7 @@ export async function create(data: { name: string; value: string }) {
     secure: true,
     httpOnly: true,
     path: "/",
+    expires: new Date(Date.now() + EXPIRATION_TIME),
   });
 }
 
