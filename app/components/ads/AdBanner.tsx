@@ -35,7 +35,7 @@ const AdBanner = ({
           width: "100%",
           height: "100%",
         }}
-        className="adsbygoogle bb2"
+        className="adsbygoogle"
         data-ad-client={"ca-" + dataAdClient}
         data-ad-slot={dataAdSlot}
         data-ad-format={dataAdFormat}
