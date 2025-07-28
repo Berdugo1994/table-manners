@@ -53,6 +53,11 @@ export default function HomeComponent() {
         <WhatIsComponent />
         <StartGameButton />
       </div>
+      <div className="w-full flex justify-center items-center gap-4">
+        <a href="/policy" className="underline">
+          Policy
+        </a>
+      </div>
     </div>
   );
 }
