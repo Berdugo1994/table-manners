@@ -2,6 +2,7 @@ import type { Viewport, Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import "primeicons/primeicons.css";
+import AdSense from "./components/ads/AdSense";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,8 +24,15 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const publisherId = process.env.NEXT_PUBLIC_ADSENSE_PUBLISHER_ID || "";
+  if (publisherId === "") {
+    throw new Error("NEXT_PUBLIC_ADSENSE_PUBLISHER_ID is not set");
+  }
   return (
     <html lang="en">
+      <head>
+        <AdSense publisherId={publisherId} />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
