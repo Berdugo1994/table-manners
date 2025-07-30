@@ -15,8 +15,8 @@ export async function mongoDbClient() {
 // ---- Add ----
 export async function addGame(
   gameName: string,
-  buyIn: number,
-  ratio: number
+  ratio: number,
+  buyIn: number
 ): Promise<{ acknowledged: boolean; gameSerialNumber: number | null }> {
   await mongoDbClient();
   if (!db) return { acknowledged: false, gameSerialNumber: null };
