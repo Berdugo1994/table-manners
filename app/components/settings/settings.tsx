@@ -61,6 +61,12 @@ export default function Settings({ gameId }: { gameId: number }) {
                 <div>Finish</div>
               </div>
             </DropdownItem>
+            <DropdownItem key="home" onPress={() => router.push("/")}>
+              <div className={classNames(styles.menuItem, "gap-1 text-lg h-3")}>
+                <i className="pi pi-home"></i>
+                <div>Home</div>
+              </div>
+            </DropdownItem>
           </DropdownMenu>
         </Dropdown>
       )}

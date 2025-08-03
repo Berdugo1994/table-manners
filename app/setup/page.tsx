@@ -6,6 +6,7 @@ import BoardBackground from "../components/board/boardBackground";
 import { WelcomeModal } from "../components/welcomeModal/welcomeModal";
 import { useBoardStore } from "../store/boardStore";
 import { useRouter } from "next/navigation";
+import TopNavbar from "../components/topNavbar/topNavbar";
 // import { RotateModal } from "../components/rotateModal/rotateModal";
 // import { useOrientation } from "@uidotdev/usehooks";
 
@@ -40,6 +41,7 @@ export default function SetupPage() {
 
   return (
     <>
+      <TopNavbar />
       <BoardBackground />
       {/* <RotateModal isModalOpen={isRotateModalOpen} /> */}
       {/* {!isRotateModalOpen && ( */}

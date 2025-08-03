@@ -8,6 +8,7 @@ import { sortPlayerResults } from "./utils";
 import { Podium } from "../components/podium/podium";
 import { Settle } from "../components/settle/settle";
 import { Results } from "../components/results/results";
+import TopNavbar from "../components/topNavbar/topNavbar";
 // import { Expense } from "../types/expense";
 // import AddExpenseModal from "../components/expenseModal/expenseModal";
 
@@ -66,6 +67,7 @@ function GameResults() {
 export default function Finish() {
   return (
     <div className="flex flex-col gap-4 overflow-y-auto max-h-[100vh]">
+      <TopNavbar />
       <Suspense
         fallback={
           <div className="flex justify-center items-center w-full h-full">
