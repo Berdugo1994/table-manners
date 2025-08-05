@@ -14,10 +14,39 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const urls = {
+  publicDomain: "https://tipshim.online",
+  linkedin: "https://il.linkedin.com/in/eden-berdugo",
+};
+
+const keywords = ["table manners", "poker", "chips", "rebuys", "settle up"];
+const title = "Table Manners";
+const description =
+  "Track chips, manage rebuys, and settle up — no confusion, no math";
+
 export const metadata: Metadata = {
-  title: "Table Manners",
-  description:
-    "Track chips, manage rebuys, and settle up — no confusion, no math",
+  title,
+  description,
+  metadataBase: new URL(urls.publicDomain),
+  authors: [{ name: "Eden Berdugo", url: urls.linkedin }],
+  keywords,
+  creator: "Eden Berdugo",
+  publisher: "Oracle - OCI",
+  applicationName: "Table Manners",
+  openGraph: {
+    url: urls.publicDomain,
+    title,
+    description,
+    siteName: "Table Manners",
+    images: [
+      {
+        url: `${urls.publicDomain}/opengraph-image.png`,
+      },
+    ],
+  },
+  // alternates: {
+  //   canonical: `/`,
+  // },
 };
 
 export default function RootLayout({
