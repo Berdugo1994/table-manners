@@ -7,9 +7,11 @@ import RecentGames from "./recentGames";
 import StartGameButton from "../startGameButton/startGameButton";
 import HowToComponent from "../howTo/howToComponent";
 import WhatIsComponent from "../whatIs/whatIsComponent";
-import ImageComponent from "./image";
+// import ImageComponent from "./image";
 import AdBanner from "../ads/AdBanner";
 import TopNavbar from "../topNavbar/topNavbar";
+import Faq from "../faq/faq";
+import QuoteComponent from "../quote/howToComponent";
 
 export default function HomeComponent() {
   const [recentGames, setRecentGames] = useState<BoardMetadata[] | null>(null);
@@ -37,8 +39,9 @@ export default function HomeComponent() {
   return (
     <div className="w-full flex flex-col items-center justify-center p-4 overflow-y-auto ">
       <TopNavbar />
+      <QuoteComponent />
       <div className="flex flex-col items-center justify-center gap-4  max-w-[100%] w-[500px]">
-        <div className="w-full h-[100px]">
+        <div className="w-full h-[10px]" id="google-ad-placeholder">
           <AdBanner
             dataAdSlot={adSlot}
             dataAdClient={publisherId}
@@ -50,9 +53,11 @@ export default function HomeComponent() {
         <Divider className="w-full radius-1" />
         <HowToComponent />
         <Divider className="w-full radius-1" />
-        <ImageComponent />
+        {/* <ImageComponent /> */}
 
         <WhatIsComponent />
+        <Divider className="w-full radius-1" />
+        <Faq />
         <StartGameButton />
       </div>
       <div className="w-full flex justify-center items-center gap-4">
