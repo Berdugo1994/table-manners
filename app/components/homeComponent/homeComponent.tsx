@@ -39,8 +39,9 @@ export default function HomeComponent() {
   return (
     <div className="w-full flex flex-col items-center justify-center p-4 overflow-y-auto ">
       <TopNavbar />
-      <QuoteComponent />
       <div className="flex flex-col items-center justify-center gap-4  max-w-[100%] w-[500px]">
+        <QuoteComponent />
+        <Divider className="w-full radius-1" />
         <div className="w-full h-[10px]" id="google-ad-placeholder">
           <AdBanner
             dataAdSlot={adSlot}
