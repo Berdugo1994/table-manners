@@ -6,13 +6,17 @@ import { Caveat } from "next/font/google";
 import { DM_Serif_Display } from "next/font/google";
 
 const caveat = Caveat({
-  weight: ["400", "700"],
+  weight: "400",
   subsets: ["latin"],
+  display: "swap",
+  preload: true,
 });
 
 const dmSerifDisplay = DM_Serif_Display({
-  weight: ["400"],
+  weight: "400",
   subsets: ["latin"],
+  display: "swap",
+  preload: true,
 });
 
 export default function QuoteComponent() {
