@@ -11,6 +11,10 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        caveat: ["Caveat", "cursive"],
+        "dm-serif-display": ["DM Serif Display", "serif"],
+      },
       colors: {
         // Light mode colors only
         background: "#ffffff",
