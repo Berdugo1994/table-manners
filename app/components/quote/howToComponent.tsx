@@ -1,5 +1,5 @@
 const quote =
-  "Every game it’s the same — rebuys, chips flying around, and at the end the math never adds up. You need to be a genius just to figure out who actually won or lost.";
+  "Every game it's the same — rebuys, chips flying around, and at the end the math never adds up. You need to be a genius just to figure out who actually won or lost.";
 const author = "Any Player, Any Time.";
 const answer = "This is exactly what this app does for you.";
 // import { Caveat } from "next/font/google";
@@ -31,3 +31,4 @@ export default function QuoteComponent() {
     </div>
   );
 }
+å;
