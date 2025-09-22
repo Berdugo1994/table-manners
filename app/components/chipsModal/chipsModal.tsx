@@ -80,6 +80,9 @@ export default function ChipsModal({
         onClose={() => {
           setIsModalOpen(false);
         }}
+        size="lg"
+        classNames={{ base: "max-h-[90vh] overflow-y-auto" }}
+        scrollBehavior="inside"
       >
         <ModalContent>
           <ModalHeader>Number Of Chips</ModalHeader>
@@ -104,11 +107,11 @@ export default function ChipsModal({
                     </Button>
                   </div>
                 )}
-                <div className="flex flex-row flex-wrap gap-x-2 gap-y-1 justify-center">
+                <div className="flex flex-row flex-wrap gap-2 justify-center">
                   {players.map((player, index) => (
                     <div
                       key={player.id}
-                      className="flex flex-col items-center gap-0.5 w-[100px]"
+                      className="flex flex-col items-center gap-1 w-[100px] min-w-[80px]"
                     >
                       <PlayerCard
                         player={player}
