@@ -12,6 +12,9 @@ import AdBanner from "../ads/AdBanner";
 import TopNavbar from "../topNavbar/topNavbar";
 import Faq from "../faq/faq";
 import QuoteComponent from "../quote/howToComponent";
+import Image from "next/image";
+import imageMonkeyChipsFlying from "@/app/assets/homepage/monkey-chips-flying.png";
+import { Counter } from "../counter/counter";
 
 export default function HomeComponent() {
   const [recentGames, setRecentGames] = useState<BoardMetadata[] | null>(null);
@@ -40,8 +43,6 @@ export default function HomeComponent() {
     <div className="w-full flex flex-col items-center justify-center p-4 overflow-y-auto ">
       <TopNavbar />
       <div className="flex flex-col items-center justify-center gap-4  max-w-[100%] w-[500px]">
-        <QuoteComponent />
-        <Divider className="w-full radius-1" />
         <div className="w-full h-[10px]" id="google-ad-placeholder">
           <AdBanner
             dataAdSlot={adSlot}
@@ -51,6 +52,15 @@ export default function HomeComponent() {
           />
         </div>
         <RecentGames recentGames={recentGames} />
+        <Divider className="w-full radius-1" />
+        <Image
+          src={imageMonkeyChipsFlying}
+          alt="monkey chips flying"
+          width={250}
+          height={250}
+        />
+        <QuoteComponent />
+        <Counter />
         <Divider className="w-full radius-1" />
         <HowToComponent />
         <Divider className="w-full radius-1" />
