@@ -13,6 +13,7 @@ import {
 } from "./game_utils";
 import { GameState } from "@/lib/model/game";
 import { BoardMetadata } from "../types/load";
+import { SerializedGame } from "../types/load";
 
 export async function getGame(gameId: number): Promise<FinalPlayer[] | null> {
   const game = await getGameById(gameId);
@@ -83,4 +84,27 @@ export async function getRecentBoardsMetadata(
   recentBoardsIds: number[]
 ): Promise<BoardMetadata[]> {
   return await getBoardsMetadata(recentBoardsIds);
+}
+
+export async function getSerializedGameById(
+  gameId: number
+): Promise<SerializedGame | null> {
+  const game = await getGameById(gameId);
+  if (!game) {
+    return null;
+  }
+
+  // Serialize the game data to remove MongoDB-specific fields
+  return {
+    gameSerialNumber: game.gameSerialNumber,
+    gameName: game.gameName,
+    ratio: game.ratio,
+    buyIn: game.buyIn,
+    players: game.players.map((player) => ({
+      name: player.name,
+      credits: player.credits,
+      checkoutChips: player.checkoutChips,
+      isCheckedOut: player.isCheckedOut,
+    })),
+  };
 }
