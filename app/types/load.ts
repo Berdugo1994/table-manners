@@ -9,3 +9,18 @@ export type BoardMetadata = {
   gameName: string;
   state: GameState;
 };
+
+export type SerializedGame = {
+  gameSerialNumber: number;
+  gameName: string;
+  ratio: number;
+  buyIn: number;
+  players: SerializedPlayer[];
+};
+
+export type SerializedPlayer = {
+  name: string;
+  credits: number;
+  checkoutChips: number;
+  isCheckedOut: boolean;
+};

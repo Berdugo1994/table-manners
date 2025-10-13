@@ -6,7 +6,7 @@ import Settings from "../settings/settings";
 import BoardBackground from "./boardBackground";
 import { useEffect, useState } from "react";
 import { useBoardStore } from "@/app/store/boardStore";
-import { getGameById } from "@/app/api/game_db_utils";
+import { getSerializedGameById } from "@/app/actions/game_actions";
 import { Spinner, ToastProvider } from "@heroui/react";
 import { usePlayerStore } from "@/app/store/playerStore";
 import AddPlayersModal from "../addPlayersModal/addPlayertsModal";
@@ -25,7 +25,7 @@ export default function PlayingBoard({ gameId }: { gameId: number }) {
         console.error("No gameId and no board data");
         return;
       }
-      getGameById(gameId).then((game) => {
+      getSerializedGameById(gameId).then((game) => {
         if (game) {
           BoardStore.initBoard(
             game.gameSerialNumber,

@@ -38,8 +38,9 @@ export default function ChipsModal({
   const totalChips = credits * (getRatio() ?? 0);
   const players = usePlayerStore((state) => state.players);
   const [tempChips, setTempChips] = useState<number[]>(
-    players.map((player) => player.checkoutChips)
+    players.map((player) => player.checkoutChips || 0)
   );
+  console.log("tempChips", tempChips);
   const positivePlayersCount = tempChips.filter((x) => x > 0).length;
 
   useEffect(() => {
@@ -129,7 +130,7 @@ export default function ChipsModal({
                         isCheckedOut={player.isCheckedOut}
                       />
                       <Input
-                        value={tempChips[index].toString()}
+                        value={"" + tempChips[index]}
                         onChange={(e) => {
                           let value = Number(
                             (e as ChangeEvent<HTMLInputElement>)?.target
