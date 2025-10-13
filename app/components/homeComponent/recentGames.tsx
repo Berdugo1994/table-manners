@@ -102,7 +102,7 @@ export default function RecentGames({
     }
   };
   return (
-    <div className="min-h-[200px] w-full flex flex-col items-center justify-center">
+    <div className="min-h-[100px] w-full flex flex-col items-center justify-center">
       {compToRender()}
     </div>
   );

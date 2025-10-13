@@ -26,6 +26,14 @@ export default function Policy() {
         This app is a tool — not a platform for gambling or financial exchange.
         Please use it responsibly and respectfully.
       </p>
+      <p className="mb-4">
+        Feel free to contact us at{" "}
+        <a className="underline" href="mailto:berdugogo@gmail.com">
+          berdugogo@gmail.com
+        </a>{" "}
+        if you have any questions, or suggestions for improvements. We would
+        love to hear from you!
+      </p>
     </section>
   );
 }
