@@ -10,6 +10,7 @@ const urls = {
 
 const keywords = [
   "table manners",
+  "tipshim.online",
   "poker",
   "chips",
   "rebuys",
