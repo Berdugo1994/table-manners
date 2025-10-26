@@ -1,3 +1,6 @@
+"use client";
+import TopNavbar from "../components/topNavbar/topNavbar";
+
 export default function Contact() {
   return (
     <main
@@ -8,6 +11,7 @@ export default function Contact() {
         margin: "auto",
       }}
     >
+      <TopNavbar />
       <h1>Contact Us</h1>
       <p>
         We&apos;d love to hear from you! If you have any questions, suggestions,

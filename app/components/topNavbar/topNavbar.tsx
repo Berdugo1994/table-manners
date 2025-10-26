@@ -7,6 +7,7 @@ import {
   NavbarMenu,
   NavbarMenuToggle,
   NavbarMenuItem,
+  Divider,
 } from "@heroui/react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
@@ -24,43 +25,46 @@ export default function TopNavbar() {
   const isPolicy = currentPath === "/policy";
   const isContact = currentPath === "/contact";
   return (
-    <Navbar>
-      <NavbarBrand>
-        <Link color="foreground" href="/">
-          <TableMannersLogo />
-          <p className="font-bold text-inherit">Table Manners</p>
-        </Link>
-      </NavbarBrand>
+    <>
+      <Navbar>
+        <NavbarBrand>
+          <Link color="foreground" href="/">
+            <TableMannersLogo />
+            <p className="font-bold text-inherit">Table Manners</p>
+          </Link>
+        </NavbarBrand>
 
-      <NavbarMenu>
-        <NavbarContent className="hidden flex gap-4" justify="center">
-          <NavbarMenuItem>
-            <NavbarItem isActive={isHome}>
-              <Link color="foreground" href="/">
-                Home
-              </Link>
-            </NavbarItem>
-            <NavbarItem isActive={isSetup}>
-              <Link color="foreground" href="/setup">
-                New Game
-              </Link>
-            </NavbarItem>
-            <NavbarItem isActive={isPolicy}>
-              <Link color="foreground" href="/policy">
-                Policy
-              </Link>
-            </NavbarItem>
-            <NavbarItem isActive={isContact}>
-              <Link color="foreground" href="/contact">
-                Contact
-              </Link>
-            </NavbarItem>
-          </NavbarMenuItem>
+        <NavbarMenu>
+          <NavbarContent className="hidden flex gap-4" justify="center">
+            <NavbarMenuItem>
+              <NavbarItem isActive={isHome}>
+                <Link color="foreground" href="/">
+                  Home
+                </Link>
+              </NavbarItem>
+              <NavbarItem isActive={isSetup}>
+                <Link color="foreground" href="/setup">
+                  New Game
+                </Link>
+              </NavbarItem>
+              <NavbarItem isActive={isPolicy}>
+                <Link color="foreground" href="/policy">
+                  Policy
+                </Link>
+              </NavbarItem>
+              <NavbarItem isActive={isContact}>
+                <Link color="foreground" href="/contact">
+                  Contact
+                </Link>
+              </NavbarItem>
+            </NavbarMenuItem>
+          </NavbarContent>
+        </NavbarMenu>
+        <NavbarContent justify="end">
+          <NavbarMenuToggle />
         </NavbarContent>
-      </NavbarMenu>
-      <NavbarContent justify="end">
-        <NavbarMenuToggle />
-      </NavbarContent>
-    </Navbar>
+      </Navbar>
+      <Divider className="w-full radius-1 h-0.5" />
+    </>
   );
 }

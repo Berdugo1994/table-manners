@@ -5,7 +5,6 @@ import { BoardMetadata } from "@/app/types/load";
 import { GameState } from "@/lib/model/game";
 import { Chip, Listbox, ListboxItem, Spinner } from "@heroui/react";
 import { useRouter } from "next/navigation";
-import StartGameButton from "../startGameButton/startGameButton";
 
 export const ListboxWrapper = ({ children }: { children: React.ReactNode }) => (
   <div className="w-full border-small px-1 py-2 rounded-small border-default-200 dark:border-default-100">
@@ -32,7 +31,6 @@ export default function RecentGames({
           <div>{AppDescription}</div>
         </div>
         <div>{AppDescription2}</div>
-        <StartGameButton title="Start free now!" />
       </div>
     );
   };
