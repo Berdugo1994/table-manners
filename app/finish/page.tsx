@@ -9,8 +9,7 @@ import { Podium } from "../components/podium/podium";
 import { Settle } from "../components/settle/settle";
 import { Results } from "../components/results/results";
 import TopNavbar from "../components/topNavbar/topNavbar";
-// import { Expense } from "../types/expense";
-// import AddExpenseModal from "../components/expenseModal/expenseModal";
+import AdBanner from "../components/ads/AdBanner";
 
 function GameResults() {
   const [isLoading, setIsLoading] = useState(true);
@@ -20,8 +19,6 @@ function GameResults() {
   const gameIdNumber = Number(gameId);
   const [game, setGame] = useState<FinalPlayer[] | null>(null);
   const sortedPlayers = sortPlayerResults(game ?? []);
-  // const [expenses, setExpenses] = useState<Expense[]>([]);
-  // const [addExpenseModal, setAddExpenseModal] = useState<boolean>(false);
 
   useEffect(() => {
     if (gameId && !isNaN(gameIdNumber)) {
@@ -55,10 +52,23 @@ function GameResults() {
     return null;
   }
 
+  const publisherId = process.env.NEXT_PUBLIC_ADSENSE_PUBLISHER_ID || "";
+  const adSlot = process.env.NEXT_PUBLIC_ADSENSE_AD_SLOT || "";
+  if (publisherId === "" || adSlot === "") {
+    throw new Error(
+      "NEXT_PUBLIC_ADSENSE_PUBLISHER_ID or NEXT_PUBLIC_ADSENSE_AD_SLOT is not set"
+    );
+  }
   return (
     <div className="flex flex-col gap-4">
       <Results players={sortedPlayers} />
       <Podium players={sortedPlayers} />
+      <AdBanner
+        dataAdSlot={"4604350211"}
+        dataAdClient={publisherId}
+        dataAdFormat="auto"
+        dataFullWidthResponsive={true}
+      />
       <Settle players={sortedPlayers} />
     </div>
   );

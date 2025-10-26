@@ -8,7 +8,16 @@ const urls = {
   linkedin: "https://il.linkedin.com/in/eden-berdugo",
 };
 
-const keywords = ["table manners", "poker", "chips", "rebuys", "settle up"];
+const keywords = [
+  "table manners",
+  "poker",
+  "chips",
+  "rebuys",
+  "settle up",
+  "Settle down poker app",
+  "Tipshim Online",
+  "Keves Hakvasim",
+];
 const title = "Table Manners";
 const description =
   "Track chips, manage rebuys, and settle up — no confusion, no math";
@@ -33,9 +42,6 @@ export const metadata: Metadata = {
       },
     ],
   },
-  // alternates: {
-  //   canonical: `/`,
-  // },
 };
 
 export default function RootLayout({
